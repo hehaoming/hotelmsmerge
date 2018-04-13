@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotelms.dao.PredetermineMapper">
+
+
+    <select id="selectSomePredeterminesByState" parameterType="string" resultType="predetermine">
+        SELECT * FROM predetermine
+        <where>
+            predetermineStateName = #{stateName}
+        </where>
+    </select>
+
+    <select id="selectSomePredeterminesByStateAndIds" parameterType="hashmap" resultType="predetermine">
+        SELECT * FROM predetermine
+        <where>
+            predetermineStateName = #{stateName}
+            <if test="passengerIDs.length != 0 or teamIds.length !=0">
+            AND (
+            <if test="passengerIDs.length != 0">
+            passengerID IN
+            <foreach collection="passengerIDs" item="id" open="(" close=")" separator=",">
+              #{id}
+            </foreach>
+             OR
+            </if>
+            <if test="teamIds.length != 0">
+            tuanduiID IN
+            <foreach collection="teamIds" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+            </if>
+            )
+            </if>
+        </where>
+    </select>
+
+    <insert id="insertPredetermine" parameterType="predetermine">
+        INSERT INTO predetermine VALUES (NULL ,#{roomID},#{tuanduiID},#{passengerID},#{arriveTime},#{deposit}
+        ,#{predetermineDay},#{passengerContactPhoneNumber},#{predetermineStateName},#{payWayID},#{type})
+    </insert>
+
+    <select id="selectPredetermineByID" parameterType="int" resultType="predetermine">
+        SELECT * from predetermine
+        <where>
+            predetermineID = #{id}
+        </where>
+    </select>
+
+    <delete id="deletePredetermineByID" parameterType="int">
+        DELETE FROM predetermine
+        <where>
+            predetermineID = #{id}
+        </where>
+    </delete>
+
+    <update id="updatePredetermineStateNameToOverById" parameterType="int">
+        UPDATE predetermine SET predetermineStateName = '已安排'
+        <where>
+            predetermineID = #{id}
+        </where>
+    </update>
+</mapper>

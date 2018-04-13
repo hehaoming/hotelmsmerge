@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotelms.dao.ItemMapper">
+    <select id="getListOfItem" parameterType="int" resultType="ItemBean">
+        SELECT * FROM itemdetails WHERE itemID=#{itemID}
+    </select>
+    <select id="getOneOfItem" parameterType="int" resultType="ItemBean">
+        SELECT * FROM itemdetails WHERE itemDetailsID=#{itemDetailsID}
+    </select>
+    <select id="getOneNameOfItem" parameterType="int" resultType="string">
+        SELECT category FROM itemdetails WHERE itemDetailsID=#{itemDetailsID}
+    </select>
+</mapper>

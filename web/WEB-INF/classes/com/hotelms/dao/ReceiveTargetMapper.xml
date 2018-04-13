@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotelms.dao.ReceiveTargetMapper">
+
+
+    <insert id="addReceiveTarget" parameterType="receiveTargetBean">
+        INSERT INTO team (rt_id,targetTypeID,principal,teamName,teamCode,registerTime,contactPhoneNUmber)
+        VALUES (NULL,#{targetTypeID},#{principal},#{teamName},#{teamCode},#{registerTime},#{contactPhoneNUmber});
+    </insert>
+
+    <delete id="deleteReceiveTargetByID" parameterType="string">
+        delete from team where rt_id in ${rt_id}
+
+
+        <!--#{}  注入会加''
+                 ${}注入不加'',光棍进来
+
+                 如果注入不了，就去dao方法写一个注解强行注入；
+                 暴力简单；
+                 -->
+        <!--<bind name="idsBind"  value="'(' + #{_parameter} + ')'"/>-->
+
+        <!--delete from receivetarget where rt_id in #{idsBind}-->
+        <!--<foreach item="id"  collection="#{idsBind}" open="(" separator="," close= ")">-->
+        <!--#{id}-->
+        <!--</foreach>-->
+
+    </delete>
+    <update id="updateReceiveTarget" parameterType="receiveTargetBean">
+
+        update  team
+        set targetTypeID =#{targetTypeID},
+        principal=#{principal},
+        teamName=#{teamName},
+        teamCode=#{teamCode},
+        registerTime=#{registerTime},
+        contactPhoneNUmber=#{contactPhoneNUmber}
+        where rt_id = #{rt_id}
+    </update>
+
+
+    <select id="findReceiveTargetByID" parameterType="int" resultType="receiveTargetBean">
+        SELECT * FROM team
+        WHERE rt_id = #{rt_id,jdbcType=INTEGER}
+    </select>
+
+    <select id="findReceiveTargetByName" parameterType="string" resultType="receiveTargetBean">
+        <!--<bind name="pattern" value="'%' + #{teamName} + '%'" />-->
+        SELECT * FROM team
+        WHERE teamName LIKE CONCAT('%',#{teamName},'%')
+    </select>
+
+    <select id="findAllReceiveTarget" resultType="receiveTargetBean">
+        SELECT * FROM team
+    </select>
+
+    <!--<select id="findReceiveTargetByLimit" parameterType="int" resultType="receiveTargetBean">-->
+    <!--<if test="page != 1">-->
+    <!--SELECT * FROM receivetarget limit (#{page}-1)*10,10;-->
+    <!--</if>-->
+    <!--<if test="page == 1">-->
+    <!--SELECT * FROM receivetarget limit 0,10;-->
+    <!--</if>-->
+
+    <!--</select>-->
+
+</mapper>

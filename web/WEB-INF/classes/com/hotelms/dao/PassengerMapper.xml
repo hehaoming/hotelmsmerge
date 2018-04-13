@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotelms.dao.PassengerMapper">
+  <resultMap id="BaseResultMap" type="com.hotelms.bean.Passenger">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="genderID" jdbcType="VARCHAR" property="genderid" />
+    <result column="birthDate" jdbcType="VARCHAR" property="birthdate" />
+    <result column="nationID" jdbcType="INTEGER" property="nationid" />
+    <result column="licenceIssuingAuthorty" jdbcType="VARCHAR" property="licenceissuingauthorty" />
+    <result column="papersValidity" jdbcType="VARCHAR" property="papersvalidity" />
+    <result column="profession" jdbcType="VARCHAR" property="profession" />
+    <result column="educationDegreeID" jdbcType="INTEGER" property="educationdegreeid" />
+    <result column="passengerLevelID" jdbcType="INTEGER" property="passengerlevelid" />
+    <result column="papersID" jdbcType="INTEGER" property="papersid" />
+    <result column="papersNumber" jdbcType="VARCHAR" property="papersnumber" />
+    <result column="unitsOrAddress" jdbcType="VARCHAR" property="unitsoraddress" />
+    <result column="thingReasonID" jdbcType="INTEGER" property="thingreasonid" />
+    <result column="whereAreFrom" jdbcType="VARCHAR" property="wherearefrom" />
+    <result column="whereToGo" jdbcType="VARCHAR" property="wheretogo" />
+    <result column="contactPhoneNumber" jdbcType="INTEGER" property="contactphonenumber" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, genderID, birthDate, nationID, licenceIssuingAuthorty, papersValidity, 
+    profession, educationDegreeID, passengerLevelID, papersID, papersNumber, unitsOrAddress, 
+    thingReasonID, whereAreFrom, whereToGo, contactPhoneNumber, remarks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="com.hotelms.bean.Passenger">
+    select 
+    *
+    from passenger
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from passenger
+    <where>
+        <foreach collection="array" item="id">
+            or id=#{id}
+        </foreach>
+    </where>
+  </delete>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotelms.bean.Passenger">
+    update passenger
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="genderid != null">
+        genderID = #{genderid,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null">
+        birthDate = #{birthdate,jdbcType=VARCHAR},
+      </if>
+      <if test="nationid != null">
+        nationID = #{nationid,jdbcType=INTEGER},
+      </if>
+      <if test="licenceissuingauthorty != null">
+        licenceIssuingAuthorty = #{licenceissuingauthorty,jdbcType=VARCHAR},
+      </if>
+      <if test="papersvalidity != null">
+        papersValidity = #{papersvalidity,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null">
+        profession = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="educationdegreeid != null">
+        educationDegreeID = #{educationdegreeid,jdbcType=INTEGER},
+      </if>
+      <if test="passengerlevelid != null">
+        passengerLevelID = #{passengerlevelid,jdbcType=INTEGER},
+      </if>
+      <if test="papersid != null">
+        papersID = #{papersid,jdbcType=INTEGER},
+      </if>
+      <if test="papersnumber != null">
+        papersNumber = #{papersnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unitsoraddress != null">
+        unitsOrAddress = #{unitsoraddress,jdbcType=VARCHAR},
+      </if>
+      <if test="thingreasonid != null">
+        thingReasonID = #{thingreasonid,jdbcType=INTEGER},
+      </if>
+      <if test="wherearefrom != null">
+        whereAreFrom = #{wherearefrom,jdbcType=VARCHAR},
+      </if>
+      <if test="wheretogo != null">
+        whereToGo = #{wheretogo,jdbcType=VARCHAR},
+      </if>
+      <if test="contactphonenumber != null">
+        contacPhoneNumber = #{contacphonenumber,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="addpassenge" parameterType="com.hotelms.bean.Passenger">
+    insert into passenger  values (#{id}, #{name}, #{genderID}, #{birthDate}, #{nationID}, #{licenceIssuingAuthorty}, #{papersValidity},
+    #{profession}, #{educationDegreeID}, #{passengerLevelID}, #{papersID}, #{papersNumber}, #{unitsOrAddress},
+    #{thingReasonID}, #{whereAreFrom}, #{whereToGo}, #{contactPhoneNumber}, #{remarks});
+  </insert>
+
+   <update id="updateByPrimaryKey" parameterType="com.hotelms.bean.Passenger">
+       UPDATE passenger SET name = #{name} ,genderID = #{genderID},birthDate = #{birthDate},nationID = #{nationID}, licenceIssuingAuthorty =#{licenceIssuingAuthorty},
+       papersValidity = #{papersValidity} ,profession = #{profession},educationDegreeID = #{educationDegreeID},passengerLevelID = #{passengerLevelID},papersID = #{papersID},
+       papersNumber = #{papersNumber},unitsOrAddress = #{unitsOrAddress},thingReasonID = #{thingReasonID},whereAreFrom = #{whereAreFrom},whereToGo = #{whereToGo},contactPhoneNumber= #{contactPhoneNumber},
+       remarks = #{remarks} WHERE id = #{id};
+   </update>
+
+    <select id="selectAccount" resultType="int">
+        SELECT count(*)FROM passenger ;
+    </select>
+
+    <resultMap id="itemdatilsResultMap" type="com.hotelms.bean.PassengerVO">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="genderID" jdbcType="VARCHAR" property="genderID" />
+        <result column="birthDate" jdbcType="VARCHAR" property="birthDate" />
+        <result column="nationID" jdbcType="INTEGER" property="nationID" />
+        <result column="licenceIssuingAuthorty" jdbcType="VARCHAR" property="licenceIssuingAuthorty" />
+        <result column="papersValidity" jdbcType="VARCHAR" property="papersValidity" />
+        <result column="profession" jdbcType="VARCHAR" property="profession" />
+        <result column="educationDegreeID" jdbcType="INTEGER" property="educationDegreeID" />
+        <result column="passengerLevelID" jdbcType="INTEGER" property="passengerLevelID" />
+        <result column="papersID" jdbcType="INTEGER" property="papersID" />
+        <result column="papersNumber" jdbcType="VARCHAR" property="papersNumber" />
+        <result column="unitsOrAddress" jdbcType="VARCHAR" property="unitsOrAddress" />
+        <result column="thingReasonID" jdbcType="INTEGER" property="thingReasonID" />
+        <result column="whereAreFrom" jdbcType="VARCHAR" property="whereAreFrom" />
+        <result column="whereToGo" jdbcType="VARCHAR" property="whereToGo" />
+        <result column="contactPhoneNumber" jdbcType="INTEGER" property="contactPhoneNumber" />
+        <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+
+        <association property="genderName" javaType="ItemBean"
+                     select="com.hotelms.dao.ItemMapper.getOneNameOfItem"
+                     column="genderID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+        <association property="nationName" javaType="ItemBean"
+                     select="com.hotelms.dao.ItemMapper.getOneNameOfItem"
+                     column="nationID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+        <association property="passengerLevelName" javaType="ItemBean"
+                     select="com.hotelms.dao.ItemMapper.getOneNameOfItem"
+                     column="passengerLevelID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+        <association property="papersName" javaType="ItemBean"
+                     select="com.hotelms.dao.ItemMapper.getOneNameOfItem"
+                     column="papersID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+    </resultMap>
+    <select id="selectAllPassenger" parameterType="map" resultMap="itemdatilsResultMap">
+        SELECT * from passenger limit #{limit} offset #{offset};
+    </select>
+
+    <select id="selectPassengerByName" parameterType="map" resultMap="itemdatilsResultMap">
+        SELECT * FROM passenger WHERE name LIKE "%"#{NAME}"%" limit #{limit} offset #{offset};
+    </select>
+
+
+
+    <select id="selectAllPassengers" resultType="passenger">
+        SELECT * FROM passenger
+    </select>
+
+    <select id="selectPassengerPhoneNumberByID" resultType="string" parameterType="int">
+        SELECT contactPhoneNumber FROM passenger
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="selectPassengerByID" parameterType="int" resultType="passenger">
+        SELECT * FROM passenger
+        <where>
+            id = #{id}
+        </where>
+    </select>
+
+    <select id="selectIDsByLikeName" parameterType="string" resultType="int">
+        SELECT id FROM passenger
+        <where>
+            `name` LIKE #{txtname}
+        </where>
+    </select>
+</mapper>

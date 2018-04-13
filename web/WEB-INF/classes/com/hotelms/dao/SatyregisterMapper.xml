@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotelms.dao.SatyregisterMapper">
+
+    <resultMap id="allTeamObject" type="teamStayRegisterVO">
+        <id column="tuanduiID" property="tuanduiID"/>
+        <result property="principal" column="principal"/>
+        <result property="teamName" column="teamName"/>
+        <result property="teamCode" column="teamCode"/>
+        <result property="registerTime" column="registerTime"/>
+        <result property="contactPhoneNUmber" column="contactPhoneNUmber"/>
+        <association property="ItemBean"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="targetTypeID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+            <result property="itemID" column="itemID"/>
+            <result property="category" column="category"/>
+        </association>
+    </resultMap>
+
+
+    <select id="getAllTeamObject"  parameterType="hashmap" resultMap="allTeamObject" >
+        select * from team
+        <where>
+            <if test="txtname != null and txtname != ''">
+                teamName LIKE '%${txtname}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="queryitemBeanByTargetTypeID"  parameterType="int" resultType="ItemBean">
+        select * from itemdetails WHERE itemDetailsID=#{itemDetailsID}
+    </select>
+
+
+    <resultMap id="allRoomObject" type="roomStayRegisterVO">
+        <id column="roomID" property="roomID"/>
+        <result property="roomNumber" column="roomNumber"/>
+        <result property="roomAmount" column="roomAmount"/>
+        <result property="standarPriceDay" column="standarPriceDay"/>
+        <result property="standarPrice" column="standarPrice"/>
+        <result property="maxDuration" column="maxDuration"/>
+        <result property="firstPrice" column="firstPrice"/>
+        <result property="firstDuration" column="firstDuration"/>
+        <association property="roomState"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="roomStateID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+            <result property="itemID" column="itemID"/>
+            <result property="category" column="category"/>
+        </association>
+        <association property="guestRoomLevel"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="guestRoomLevelID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+            <result property="itemID" column="itemID"/>
+            <result property="category" column="category"/>
+        </association>
+    </resultMap>
+
+
+    <select id="getAllRoomObject" parameterType="hashmap" resultMap="allRoomObject" >
+        select * from roomset
+        <where>
+            <if test="guestRoomLevelID != 0">
+                guestRoomLevelID=#{guestRoomLevelID}
+            </if>
+        </where>
+    </select>
+
+    <select id="getRoomByRoomId" parameterType="int" resultMap="allRoomObject">
+         select * from roomset WHERE roomID=#{roomID}
+    </select>
+
+    <insert id="saveStayRegister" parameterType="stayRegisterBean" >
+        INSERT INTO stayregister VALUES (NULL ,#{room.roomID},NULL ,
+        <choose>
+            <when test="team != null">
+                #{team.tuanduiID},
+            </when>
+            <otherwise>
+                NULL ,
+            </otherwise>
+        </choose>
+        #{passengerType.itemDetailsID},#{rentOutType.itemDetailsID},#{stayNumber},#{deposit},#{billUnit.itemDetailsID},
+        #{depositPayWay.itemDetailsID},NULL,NULL,NULL,#{stayRegisterTime},0,#{sumConst})
+    </insert>
+
+    <update id="updateRoomState" parameterType="hashmap">
+        UPDATE roomset set roomStateID=#{roomStateID} WHERE roomID=#{roomID}
+    </update>
+
+    <select id="getAllStayRegisyerObject" parameterType="hashmap" resultMap="allStayRegisyerObject">
+        SELECT * FROM stayregister LEFT OUTER JOIN roomset ON stayregister.room=roomset.roomID
+        LEFT OUTER JOIN team ON stayregister.team=team.tuanduiID
+        LEFT OUTER JOIN passenger ON stayregister.passenger=passenger.id
+        <where>
+            <choose>
+                <when test="targetType == 55">
+                    team IS NULL
+                </when>
+                <otherwise>
+                    team IS NOT NULL
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <resultMap id="allStayRegisyerObject" type="stayRegisterBean">
+        <id column="stayregisterdetailId" property="stayregisterdetailId"/>
+        <result property="stayNumber" column="stayNumber"/>
+        <result property="deposit" column="deposit"/>
+        <result property="changingRoomNumber" column="changingRoomNumber"/>
+        <result property="changingRoomMoney" column="changingRoomMoney"/>
+        <result property="changingRoomTime" column="changingRoomTime"/>
+        <result property="stayRegisterTime" column="stayRegisterTime"/>
+        <result property="isBillId" column="isBillId"/>
+        <result property="sumConst" column="sumConst"/>
+        <association property="passengerType"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="passengerTypeId">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+            <result property="itemID" column="itemID"/>
+            <result property="category" column="category"/>
+        </association>
+        <association property="rentOutType"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="rentOutTypeId">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+            <result property="itemID" column="itemID"/>
+            <result property="category" column="category"/>
+        </association>
+        <association property="billUnit"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="billUnitId">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+            <result property="itemID" column="itemID"/>
+            <result property="category" column="category"/>
+        </association>
+        <association property="depositPayWay"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="depositPayWayId">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+            <result property="itemID" column="itemID"/>
+            <result property="category" column="category"/>
+        </association>
+
+        <association property="room" javaType="roomStayRegisterVO">
+            <id column="roomID" property="roomID"/>
+            <result property="roomNumber" column="roomNumber"/>
+            <result property="roomAmount" column="roomAmount"/>
+            <result property="standarPriceDay" column="standarPriceDay"/>
+            <result property="standarPrice" column="standarPrice"/>
+            <result property="maxDuration" column="maxDuration"/>
+            <result property="firstPrice" column="firstPrice"/>
+            <result property="firstDuration" column="firstDuration"/>
+            <association property="roomState"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="roomStateID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+                <result property="itemID" column="itemID"/>
+                <result property="category" column="category"/>
+            </association>
+            <association property="guestRoomLevel"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="guestRoomLevelID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+                <result property="itemID" column="itemID"/>
+                <result property="category" column="category"/>
+            </association>
+        </association>
+
+        <association property="team" javaType="TeamStayRegisterVO">
+            <id column="tuanduiID" property="tuanduiID"/>
+            <result property="principal" column="principal"/>
+            <result property="teamName" column="teamName"/>
+            <result property="teamCode" column="teamCode"/>
+            <result property="registerTime" column="registerTime"/>
+            <result property="contactPhoneNUmber" column="contactPhoneNUmber"/>
+            <association property="ItemBean"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="targetTypeID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+                <result property="itemID" column="itemID"/>
+                <result property="category" column="category"/>
+            </association>
+        </association>
+
+        <association property="passenger" javaType="passengerStayRegisterVO">
+            <id column="id" property="id"/>
+            <association property="gender"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="genderID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+            </association>
+            <association property="nation"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="nationID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+            </association>
+            <association property="educationDegree"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="educationDegreeID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+            </association>
+            <association property="passengerLevel"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="passengerLevelID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+            </association>
+            <association property="papers"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="papersID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+            </association>
+            <association property="thingReasonID"
+                         javaType="ItemBean"
+                         select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                         column="thingReasonID">
+                <id column="itemDetailsID" property="itemDetailsID"/>
+            </association>
+        </association>
+    </resultMap>
+
+
+    <select id="getAllPassengerObject"  parameterType="hashmap" resultMap="allPassengerObject" >
+        select * from passenger
+        <where>
+            <if test="txtname != null and txtname != ''">
+                teamName LIKE '%${txtname}%'
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="allPassengerObject" type="passengerStayRegisterVO">
+        <id column="id" property="id"/>
+        <association property="gender"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="genderID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+       <!-- <association property="nation"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="nationID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>-->
+        <association property="educationDegree"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="educationDegreeID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+        <association property="passengerLevel"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="passengerLevelID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+        <association property="papers"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="papersID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+        <association property="thingReasonID"
+                     javaType="ItemBean"
+                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                     column="thingReasonID">
+            <id column="itemDetailsID" property="itemDetailsID"/>
+        </association>
+    </resultMap>
+
+    
+  <insert id="insertRegisterByPredetermine" parameterType="predetermine">
+    INSERT INTO stayregister VALUES (NULL ,#{roomID},#{passengerID},#{tuanduiID},76 ,74
+    ,#{predetermineDay} ,#{deposit},
+    <if test="type == 1">79</if>
+    <if test="type == 2">78</if>
+     ,#{payWayID},NULL ,NULL ,NULL ,#{arriveTime} ,0,NULL)
+  </insert>
+</mapper>

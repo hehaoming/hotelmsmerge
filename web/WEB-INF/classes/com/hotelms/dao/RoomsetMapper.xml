@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hotelms.dao.RoomsetMapper">
+
+  <resultMap id="BaseResultMap" type="com.hotelms.bean.Roomset">
+    <id column="roomID" jdbcType="INTEGER" property="roomid" />
+    <result column="roomNumber" jdbcType="INTEGER" property="roomnumber" />
+    <result column="roomStateID" jdbcType="INTEGER" property="roomstateid" />
+    <result column="roomAmount" jdbcType="INTEGER" property="roomamount" />
+    <result column="guestRoomLevelID" jdbcType="INTEGER" property="guestroomlevelid" />
+    <result column="standarPriceDay" jdbcType="INTEGER" property="standarpriceday" />
+    <result column="standarPrice" jdbcType="INTEGER" property="standarprice" />
+    <result column="maxDuration" jdbcType="INTEGER" property="maxduration" />
+    <result column="firstPrice" jdbcType="INTEGER" property="firstprice" />
+    <result column="firstDuration" jdbcType="INTEGER" property="firstduration" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    roomID, roomNumber, roomStateID, roomAmount, guestRoomLevelID, standarPriceDay, standarPrice, 
+    maxDuration, firstPrice, firstDuration
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from roomset
+    where roomID = #{roomid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from roomset
+    where roomID = #{roomid,jdbcType=INTEGER}
+  </delete>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hotelms.bean.Roomset">
+    update roomset
+    <set>
+      <if test="roomnumber != null">
+        roomNumber = #{roomnumber,jdbcType=INTEGER},
+      </if>
+      <if test="roomstateid != null">
+        roomStateID = #{roomstateid,jdbcType=INTEGER},
+      </if>
+      <if test="roomamount != null">
+        roomAmount = #{roomamount,jdbcType=INTEGER},
+      </if>
+      <if test="guestroomlevelid != null">
+        guestRoomLevelID = #{guestroomlevelid,jdbcType=INTEGER},
+      </if>
+      <if test="standarpriceday != null">
+        standarPriceDay = #{standarpriceday,jdbcType=INTEGER},
+      </if>
+      <if test="standarprice != null">
+        standarPrice = #{standarprice,jdbcType=INTEGER},
+      </if>
+      <if test="maxduration != null">
+        maxDuration = #{maxduration,jdbcType=INTEGER},
+      </if>
+      <if test="firstprice != null">
+        firstPrice = #{firstprice,jdbcType=INTEGER},
+      </if>
+      <if test="firstduration != null">
+        firstDuration = #{firstduration,jdbcType=INTEGER},
+      </if>
+    </set>
+    where roomID = #{roomid,jdbcType=INTEGER}
+  </update>
+
+  <!--通过主键修改房间信息-->
+  <update id="updateByPrimaryKey" parameterType="com.hotelms.bean.Roomset">
+    update roomset
+    set roomNumber = #{roomNumber,jdbcType=INTEGER},
+      roomStateID = #{roomStateID,jdbcType=INTEGER},
+      roomAmount = #{roomAmount,jdbcType=INTEGER},
+      guestRoomLevelID = #{guestRoomLevelID,jdbcType=INTEGER},
+      standarPriceDay = #{standarPriceDay,jdbcType=INTEGER},
+      standarPrice = #{standarPrice,jdbcType=INTEGER},
+      maxDuration = #{maxDuration,jdbcType=INTEGER},
+      firstPrice = #{firstPrice,jdbcType=INTEGER},
+      firstDuration = #{firstDuration,jdbcType=INTEGER}
+    where roomID = #{roomID,jdbcType=INTEGER}
+  </update>
+
+  <!--增加新房间-->
+  <insert id="addNewRoom" parameterType="roomset" >
+    insert into roomset VALUES ( NULL,#{roomNumber},#{roomStateID},#{roomAmount},
+    #{guestRoomLevelID},#{standarPriceDay},#{standarPrice},#{maxDuration},#{firstPrice},#{firstDuration})
+  </insert>
+
+  <!--通过房间号roomNnmber查询房间-->
+  <select id="findRoomByRoomNumber" parameterType="string" resultType="roomset">
+    SELECT * FROM roomset WHERE roomNumber = #{roomNumber}
+  </select>
+
+  <!--通过房间roomID查询房间-->
+  <select id="findRoomByRoomID" parameterType="string" resultType="roomset">
+    SELECT * FROM roomset WHERE roomID = #{roomID}
+  </select>
+  <!--查找所有房间-->
+  <select id="findAllRoom" parameterType="string" resultType="roomset">
+    SELECT * FROM roomset
+  </select>
+
+
+  <!--查询总记录数-->
+  <select id="findTotalRecordsNum" resultType="int">
+    SELECT COUNT(*) FROM roomset
+  </select>
+
+  <resultMap id="itemdatilsResultMap" type="com.hotelms.bean.RoomVo">
+    <id column="roomID" jdbcType="INTEGER" property="roomID" />
+    <result column="roomNumber" jdbcType="INTEGER" property="roomNumber" />
+    <result column="roomStateID" jdbcType="INTEGER" property="roomStateID" />
+    <result column="roomAmount" jdbcType="INTEGER" property="roomAmount" />
+    <result column="guestRoomLevelID" jdbcType="INTEGER" property="guestRoomLevelID" />
+    <result column="standarPriceDay" jdbcType="INTEGER" property="standarPriceDay" />
+    <result column="standarPrice" jdbcType="INTEGER" property="standarPrice" />
+    <result column="maxDuration" jdbcType="INTEGER" property="maxDuration" />
+    <result column="firstPrice" jdbcType="INTEGER" property="firstPrice" />
+    <result column="firstDuration" jdbcType="INTEGER" property="firstDuration" />
+
+    <association property="roomName" javaType="ItemBean"
+                 select="com.hotelms.dao.ItemMapper.getOneNameOfItem"
+                 column="roomstateid">
+      <id column="itemDetailsID" property="itemDetailsID"/>
+    </association>
+    <association property="guestRoomLevel" javaType="ItemBean"
+                 select="com.hotelms.dao.ItemMapper.getOneNameOfItem"
+                 column="guestroomlevelid">
+      <id column="itemDetailsID" property="itemDetailsID"/>
+    </association>
+  </resultMap>
+
+  <!--查找分页房间-->
+  <select id="findPartRooms" parameterType="map" resultMap="itemdatilsResultMap">
+    SELECT * FROM roomset limit #{limit} offset #{offset}
+  </select>
+  <!--查询搜索结果记录数-->
+  <select id="findTotalRecordsNumBycondition" parameterType="string" resultType="int">
+    SELECT COUNT(*) FROM roomset WHERE roomNumber LIKE #{txtname}
+  </select>
+  <!--搜索查询房间-->
+  <select id="findPartRoomBycondition" parameterType="map" resultMap="itemdatilsResultMap">
+    SELECT * FROM roomset WHERE roomNumber LIKE "%"#{txtname}"%" limit #{limit} offset #{offset}
+  </select>
+  <!--只能删除一项-->
+  <delete id="deleteRoom" parameterType="string">
+    DELETE FROM roomset WHERE roomID = #{roomID}
+  </delete>
+  <!--批量删除房间-->
+  <delete id="deleteRoomByIds" >
+    DELETE FROM roomset
+    <where>
+      <foreach collection="array" item="id">
+        OR  roomID = #{id}
+      </foreach>
+    </where>
+  </delete>
+  <select id="selectUsableRooms" resultType="roomSet">
+    SELECT * FROM roomset
+    <where>
+      roomStateID = 1
+    </where>
+  </select>
+
+  <select id="selectRoomByID" parameterType="int" resultType="roomSet">
+    SELECT * FROM roomset
+    <where>
+      roomID = #{roomID}
+    </where>
+  </select>
+
+  <update id="updateRoomStateIDByIDToPreable" parameterType="int">
+    UPDATE roomset SET roomStateID = 3
+    <where>
+      roomID = #{roomID}
+    </where>
+  </update>
+
+  <update id="updateRoomStateIDByIDToUsable" parameterType="int">
+    UPDATE roomset SET roomStateID = 1
+    <where>
+      roomID = #{roomID}
+    </where>
+  </update>
+
+
+  <update id="updateRoomStateIDByIDToUsed" parameterType="int">
+    UPDATE roomset SET roomStateID = 11
+    <where>
+      roomID = #{roomID}
+    </where>
+  </update>
+
+</mapper>

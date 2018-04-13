@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotelms.dao.TeamMapper">
+
+    <select id="selectAllTeams" resultType="team">
+        SELECT * FROM team
+    </select>
+
+    <select id="selectTeamPhoneNumberByID" parameterType="int" resultType="string">
+        SELECT contactPhoneNumber FROM team
+        <where>
+            tuanduiID = #{id}
+        </where>
+    </select>
+
+    <select id="selectTeamByID" parameterType="int" resultType="team">
+        SELECT * FROM team
+        <where>
+            tuanduiID = #{tuanduiID}
+        </where>
+    </select>
+
+    <select id="selectIDsByLikeName" parameterType="string" resultType="int">
+        SELECT tuanduiID FROM team
+        <where>
+            teamName LIKE #{txtname} OR principal LIKE #{txtname}
+        </where>
+    </select>
+</mapper>
