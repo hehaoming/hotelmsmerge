@@ -33,4 +33,6 @@ public interface SatyregisterService {
     void changeStayRegisterRoom(String id, String roomId, String changRoomMoney, String changRoomTime);
 
     void addDeposit(int depositPayWayID, int stayregisterdetailId, int deposit);
+
+    void updateStayRegisterTeam(int id, Integer receiveTargetID);
 }

@@ -150,4 +150,12 @@ public class SatyregisterServiceImpl implements SatyregisterService {
 
     }
 
+    @Override
+    public void updateStayRegisterTeam(int id, Integer receiveTargetID) {
+        HashMap<String, Integer> stringStringHashMap = new HashMap<>();
+        stringStringHashMap.put("stayregisterdetailId", id);
+        stringStringHashMap.put("team", receiveTargetID);
+        satyregisterMapper.updateStayRegisterTeam(stringStringHashMap);
+    }
+
 }

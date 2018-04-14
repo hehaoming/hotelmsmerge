@@ -37,7 +37,7 @@ public class StayregisterController {
         ListBean listBean = new ListBean();
         listBean.setResult(allStayRegisyerObject);
         model.addAttribute("LvKeLeiXingId",targetType);
-        model.addAttribute("list",listBean);
+        model.addAttribute("isBillID",0);
         return "/WEB-INF/jsp/stayregister/list.jsp";
     }
 
@@ -209,7 +209,33 @@ public class StayregisterController {
         return "/WEB-INF/jsp/stayregister/deposit.jsp";
     }
     @RequestMapping("/toshiftteam")
-    public String toshiftteam(){
-
+    public String toshiftteam(int id,int stayregisterdetailsId,Model model){
+        StayRegisterBean stayRegisterBean = satyregisterService.getStayRegisyerObjectById(stayregisterdetailsId);
+        model.addAttribute("item",stayRegisterBean);
+        List<TeamStayRegisterVO> allTeamObject = satyregisterService.getAllTeamObject("");
+        model.addAttribute("listRT",allTeamObject);
+        model.addAttribute("id",id);
+        return "/WEB-INF/jsp/stayregister/shiftteam.jsp";
     }
+
+    @RequestMapping("/changOver")
+    public String changOver(int id,@RequestParam(value = "receiveTargetID",required = false)Integer receiveTargetID,int LvKeLeiXingId,Model model){
+        satyregisterService.updateStayRegisterTeam(id,receiveTargetID);
+        model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
+        List<StayRegisterBean> allStayRegisyerObject = satyregisterService.getAllStayRegisyerObject(LvKeLeiXingId);
+        ListBean listBean = new ListBean();
+        listBean.setResult(allStayRegisyerObject);
+        model.addAttribute("list",listBean);
+        return "/WEB-INF/jsp/stayregister/list.jsp";
+    }
+
+    @RequestMapping("/toshiftpersonage")
+    public String toshiftpersonage(int id,int stayregisterdetailsId,Model model){
+        StayRegisterBean stayRegisterBean = satyregisterService.getStayRegisyerObjectById(stayregisterdetailsId);
+        model.addAttribute("item",stayRegisterBean);
+        model.addAttribute("id",id);
+        model.addAttribute("item",stayRegisterBean);
+        return "/WEB-INF/jsp/stayregister/shiftpersonage.jsp";
+    }
+
 }

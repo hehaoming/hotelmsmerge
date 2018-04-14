@@ -44,4 +44,6 @@ public interface SatyregisterMapper {
     void changeStayRegisterRoom(HashMap<String, String> stringStringHashMap);
 
     void addDeposit(HashMap<String, Integer> stringStringHashMap);
+
+    void updateStayRegisterTeam(HashMap<String, Integer> stringStringHashMap);
 }
