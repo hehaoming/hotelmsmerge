@@ -176,8 +176,8 @@
                   <%--</c:forEach> --%>
                   <%--</select>--%>
                   <select name="targetTypeID" class="cboone inputone">
-                      <option value="55">团队</option>
-                      <option value="56">散客</option>
+                      <option value="73">团队</option>
+                      <option value="72">散客</option>
                   </select>
 			  </div>
 			  <div class="span5">

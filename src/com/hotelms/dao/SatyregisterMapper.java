@@ -17,14 +17,31 @@ public interface SatyregisterMapper {
     int updateRoomState(HashMap hashMap);
 
     List<StayRegisterBean> getAllStayRegisyerObject(HashMap hashMap);
+    //from 陈志雄  标记
+    List<StayRegisterBean> analysisAllInfo();
 
     RoomStayRegisterVO getRoomByRoomId(int roomId);
 
     List<PassengerStayRegisterVO> getAllPassengerObject(HashMap stringStringHashMap);
 
-        /**
+
+   /**
      * 根据预订单增加订单
-     * @param predetermine 预订单信息
+     * @param map 预订单信息和总价格
      */
-    public void insertRegisterByPredetermine(Predetermine predetermine);
+    public void insertRegisterByPredetermine(HashMap map);
+
+    PassengerStayRegisterVO getPassengerById(int id);
+
+    int savePassenger(PassengerStayRegisterVO passenger);
+
+    void savePassengerRegister(HashMap hashMap);
+
+    List<RoomStayRegisterVO> getRoomObjectByRoomId(String[] id);
+
+    StayRegisterBean getStayRegisyerObjectById(int id);
+
+    void changeStayRegisterRoom(HashMap<String, String> stringStringHashMap);
+
+    void addDeposit(HashMap<String, Integer> stringStringHashMap);
 }

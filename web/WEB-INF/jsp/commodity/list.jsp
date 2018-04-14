@@ -90,12 +90,12 @@
        <div class="span5">
          <select id="selectCboId" name="commodityTypeID" class="dgvone" style="width:80%;" onchange="selectChange()">
             <c:forEach items="${listOne}" var="item">
-	          <option value="${item.far_id}" <c:if test="${item.far_id==commodityType}">selected="selected"</c:if>>
-	            ${item.attributeDetailsName}
+	          <option value="${item.itemDetailsID}" <c:if test="${item.itemDetailsID==commodityTypeID}">selected="selected"</c:if>>
+	            ${item.category}
 	          </option>
 	        </c:forEach> 
 		  </select>
-		  <button id="" class="textone"  data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 300, height: 600}"><li class="icon-plus"></li></button>
+		  <button style="display: none" id="" class="textone"  data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 300, height: 600}"><li class="icon-plus"></li></button>
        </div>
        <div class="span2">
          <button class="btn btn-info btn-small textone" type="button" onclick="addfunction()"><li class="icon-plus icon-white"></li>新增</button>
@@ -123,10 +123,10 @@
 	      <tbody id="tbody">
 	        <c:forEach items="${list.result}" var="item">
 		        <tr>
-		          <td><input type="checkbox" name="id" value="${item.id}"></td>
+		          <td><input type="checkbox" name="id" value="${item.commodityID}"></td>
 		          <td>${item.commodityName}</td>
-		          <td>${item.commodityTypeName}</td>
-		          <td>${item.uOMName}</td>
+		          <td>${item.commodityType}</td>
+		          <td>${item.uOM}</td>
 		          <td>${item.salePrice}</td>
 		        </tr>
 	        </c:forEach>
@@ -174,8 +174,8 @@
 	      <tbody id="tbody">
 	        <c:forEach items="${listOne}" var="item">
 		        <tr>
-		          <td><input type="checkbox" name="newid" value="${item.far_id}"></td>
-		          <td>${item.attributeDetailsName}</td>
+		          <td><input type="checkbox" name="newid" value="${item.itemDetailsID}"></td>
+		          <td>${item.category}</td>
 		        </tr>
 	        </c:forEach>
 	      </tbody>
@@ -204,7 +204,7 @@
 		if(chk_value.toString().indexOf(",")>0){
 		   alert("修改只能选择一条");
 		}else{
-		   parent.document.getElementById("Mainid").src='${ctx}/Commodity/toupdate.do?id='+chk_value;
+		   parent.document.getElementById("Mainid").src='${ctx}/Commodity/toupdate.do?commodityID='+chk_value;
 		}
 	}else{
 	  alert("请选择一条数据进行修改");
@@ -219,7 +219,7 @@
   	if(chk_value!=""){
   	var flag=window.confirm("注意：您确定要永久删除该信息吗?");
      if(flag){
-  	  parent.document.getElementById("Mainid").src='${ctx}/Commodity/delete.do?id='+chk_value;
+  	  parent.document.getElementById("Mainid").src='${ctx}/Commodity/delete.do?commodityID='+chk_value;
   	}
   	}else{
 	  alert("请选择一条或多条数据进行删除");

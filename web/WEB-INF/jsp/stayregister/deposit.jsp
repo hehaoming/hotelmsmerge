@@ -155,7 +155,7 @@
   <div class="container">
   
   <input id="LvKeLeiXingId" type="hidden" value="${LvKeLeiXingId}">
-  <input type="hidden" id="isBillID" value="${list[0].isBillID}"/>
+  <input type="hidden" id="isBillID" value="${item.isBillId}"/>
     <div class="span11" style=" border: solid; border-color: #DDDDDD;">
     <div class="span9 margin-top-one">
       <div class="row-fluid">
@@ -167,7 +167,7 @@
       <div class="row-fluid">
         <div class="span3">
           <label style="float:left;">房间号：</label>
-          <label>${list[0].roomNumber}</label>
+          <label>${item.room.roomNumber}</label>
         </div>
         <div class="span3">
           <label style="float:left;">旅客姓名：</label>
@@ -207,20 +207,18 @@
 	          <th rowspan="2">接待对象</th>
 	      </thead>
 	      <tbody id="tbody">
-	        <c:forEach items="${list}" var="item">
 		        <tr>
-		          <td><input type="checkbox" name="id" value="${item.id}"></td>
-		          <td>${item.depositRegisterTime}</td>
+		          <td><input type="checkbox" name="id" value="${item.stayregisterdetailId}"></td>
+		          <td>${item.stayRegisterTime}</td>
 		          <td>${item.deposit}</td>
-		          <td>${item.depositPayWayName}</td>
-		          <c:if test="${item.receiveTargetID==2}">
-		             <td>${item.receiveTargeTypeName}</td>
-		          </c:if>
-		          <c:if test="${item.receiveTargetID!=2}">
-		             <td>${item.receiveTeamName}</td>
-		          </c:if>
+		          <td>${item.depositPayWay.category}</td>
+					<c:if test="${empty item.team}">
+						<td>散客</td>
+					</c:if>
+					<c:if test="${!empty item.team}">
+						<td style="width:12%;">${item.team.teamName}</td>
+					</c:if>
 		        </tr>
-	        </c:forEach>
 	      </tbody>
 	    </table>
     </div>
@@ -232,7 +230,7 @@
        </div>
         <form id="form1" action="" method="post">
 	      <div class="row-fluid">
-	          <input name="depositStayRegisterID" type="hidden" value="${stayId}">
+	          <input name="stayregisterdetailId" type="hidden" value="${item.stayregisterdetailId}">
 		      <div class="span5">
 			   	  <label class="labelroomnumber">追加押金：</label>
 			      <input id="depositId" name="deposit" class="textone" onchange="onchangeOne()"
@@ -246,8 +244,8 @@
 			   	  <label class="labelroomnumber">支付方式：</label>
 			      <select name="depositPayWayID" class="cboone" style="width:100%;">
 		            <c:forEach items="${listTwo}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==16}" >selected="selected"</c:if>>
-			            ${item.attributeDetailsName}
+			          <option value="${item.itemDetailsID}" <c:if test="${item.itemDetailsID==69}" >selected="selected"</c:if>>
+			            ${item.category}
 			          </option>
 			        </c:forEach> 
 		          </select>
@@ -282,13 +280,13 @@
     
    
     function deletefunction(){
-     var LvKeLeiXingId=document.getElementById("LvKeLeiXingId").value
+     var LvKeLeiXingId=document.getElementById("LvKeLeiXingId").value;
      parent.document.getElementById('Mainid').src='${ctx}/StayRegister/tolist.do?LvKeLeiXingId='+LvKeLeiXingId;
    }
    
    function fn(s){
     var isBillID=document.getElementById("isBillID").value;
-     if(isBillID==69){
+     if(isBillID==1){
        alert("很抱歉！该数据已经结账没法进行此操作！");
        $("#dd").removeAttr("href");
      }

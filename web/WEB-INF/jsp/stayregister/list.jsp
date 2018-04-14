@@ -425,7 +425,7 @@
                 alert("登记只能根据一个房间登记");
             } else {
                 parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/toregister.do?id=' + chk_value +
-                    '&roomNumber=' + roomNumber + '&LvKeLeiXingId=' + 55;
+                    '&roomNumber=' + roomNumber + '&LvKeLeiXingId=' + 72;
             }
         } else {
             alert("请选择一条房间进行登记");
@@ -444,16 +444,16 @@
             roomNumber = table.rows[selectedIndex - 1].cells[1].innerHTML;
             TOF = table.rows[selectedIndex - 1].cells[12].innerHTML;
         });
-        if (TOF == 69) {
+        if (TOF === 1) {
             alert("很抱歉！该数据已经结账没法进行此操作！");
             return;
         }
-        if (chk_value != "") {
+        if (chk_value !== "") {
             if (chk_value.toString().indexOf(",") > 0) {
                 alert("登记只能根据一个房间登记");
             } else {
                 parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/toregister.do?id=' + chk_value +
-                    '&roomNumber=' + roomNumber + '&LvKeLeiXingId=' + 56;
+                    '&roomNumber=' + roomNumber + '&LvKeLeiXingId=' + 73;
             }
         } else {
             alert("请选择一条房间进行登记");
@@ -473,7 +473,7 @@
         var tuanDuiID = document.getElementById("tuanDuiId").value;
         if (tuanDuiID != "") {
             parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/toarrangeroom.do?tuanDuiID=' + tuanDuiID +
-                '&LvKeLeiXingId=' + 56;
+                '&LvKeLeiXingId=' + 73;
         } else {
             alert("请选择对象再安排房间！");
         }
@@ -501,7 +501,7 @@
                 alert("只能选择一个房间进行换房哦");
             } else {
                 parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/tochangroom.do?id=' +
-                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 55;
+                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 72;
             }
         } else {
             alert("请选择一条数据进行换房");
@@ -529,7 +529,7 @@
                 alert("只能选择一个房间进行换房哦");
             } else {
                 parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/tochangroom.do?id=' +
-                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 56;
+                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 73;
             }
         } else {
             alert("请选择一条数据进行换房");
@@ -552,7 +552,7 @@
                 alert("只能选择一个房间查看押金记录哦");
             } else {
                 parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/todeposit.do?id=' +
-                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 55;
+                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 72;
             }
         } else {
             alert("请选择一条数据进行查看押金记录");
@@ -574,7 +574,7 @@
                 alert("只能选择一个房间查看押金记录哦");
             } else {
                 parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/todeposit.do?id=' +
-                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 56;
+                    chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 73;
             }
         } else {
             alert("请选择一条数据进行查看押金记录");
@@ -604,7 +604,7 @@
                     alert("请先登记");
                 } else {
                     parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/toconsumption.do?id=' +
-                        chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 55 + '&roomNumber=' + roomNumber + '&isBillID=' + TOF;
+                        chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 72 + '&roomNumber=' + roomNumber + '&isBillID=' + TOF;
                 }
             }
         } else {
@@ -634,7 +634,7 @@
                     alert("请先登记");
                 } else {
                     parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/toconsumption.do?id=' +
-                        chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 56 + '&roomNumber=' + roomNumber + '&isBillID=' + TOF;
+                        chk_value + '&lvKeName=' + lvKeName + '&LvKeLeiXingId=' + 73 + '&roomNumber=' + roomNumber + '&isBillID=' + TOF;
                 }
             }
         } else {
@@ -786,9 +786,9 @@
     }
 
 
-    if ("${LvKeLeiXingId}"== '55') {
+    if ("${LvKeLeiXingId}"== '72') {
         $('#oneid').tab('show');
-    } else if ("${LvKeLeiXingId}"== '56') {
+    } else if ("${LvKeLeiXingId}"== '73') {
         $('#twoid').tab('show');
     }
 
@@ -796,14 +796,14 @@
     function selectChange() {
         var isBillID = document.getElementById("isBillID").value;
         parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?isBillID=' + isBillID +
-            '&LvKeLeiXingId=' + 55;
+            '&LvKeLeiXingId=' + 72;
     }
 
 
     function selectfunction() {
         var isBillID = document.getElementById("isBillID").value;
         var txtname = document.getElementById("txtnameid").value;
-        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?LvKeLeiXingId=' + 55 +
+        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?LvKeLeiXingId=' + 72 +
             '&isBillID=' + isBillID + "&txtname=" + txtname;
     }
 
@@ -817,7 +817,7 @@
         var principalId = document.getElementById("principalId").value;
         var contactPhoneNUmberId = document.getElementById("contactPhoneNUmberId").value;
         var registerTimeId = document.getElementById("registerTimeId").value;
-        parent.document.getElementById("Mainid").src = '${ctx}/toteamlist.do?LvKeLeiXingId=' + 56 +
+        parent.document.getElementById("Mainid").src = '${ctx}/toteamlist.do?LvKeLeiXingId=' + 73 +
             '&isBillID=' + isBillID + "&txtname=" + txtname + "&tuanDuiID=" + tuanDuiID + "&teamNameId=" + teamNameId
             + "&teamCodeId=" + teamCodeId + "&principalId=" + principalId +
             "&contactPhoneNUmberId=" + contactPhoneNUmberId + "&registerTimeId=" + registerTimeId;
@@ -825,11 +825,11 @@
 
 
     function teamfunction() {
-        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?LvKeLeiXingId=' + 56;
+        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?LvKeLeiXingId=' + 73;
     }
 
     function lvKefunction() {
-        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?LvKeLeiXingId=' + 55;
+        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?LvKeLeiXingId=' + 72;
     }
 
 
@@ -859,7 +859,7 @@
                     var tdContactPhoneNUmber = tr.insertCell(-1);
 
                     tdcheckbox.innerHTML = "<input type='radio' name='idTwo' value='" + item.tuanduiID + "'>";
-                    tdTargetTypeName.innerHTML = item.ItemBean.category;
+                    tdTargetTypeName.innerHTML = item.targetType.category;
                     tdTeamName.innerHTML = item.teamName;
                     tdTeamCode.innerHTML = item.teamCode;         //中间这个是数据
                     tdPrincipal.innerHTML = item.principal;

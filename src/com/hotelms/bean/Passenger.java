@@ -5,7 +5,7 @@ public class Passenger {
 
     private String name;
 
-    private String genderID;
+    private Integer genderID;
 
     private String birthDate;
 
@@ -33,13 +33,63 @@ public class Passenger {
 
     private String whereToGo;
 
-    private String contactPhoneNumber;
+    private String contacPhoneNumber;
 
     private String remarks;
 
 
     private String genderName;
     private String papersName;
+
+
+    public Passenger() {
+    }
+
+    public Passenger(Integer id, String name, Integer genderID, String birthDate, Integer nationID
+            , String licenceIssuingAuthorty, String papersValidity, String profession, Integer educationDegreeID
+            , Integer passengerLevelID, Integer papersID, String papersNumber, String unitsOrAddress
+            , Integer thingReasonID, String whereAreFrom, String whereToGo, String contacPhoneNumber, String remarks) {
+        this.id = id;
+        this.name = name;
+        this.genderID = genderID;
+        this.birthDate = birthDate;
+        this.nationID = nationID;
+        this.licenceIssuingAuthorty = licenceIssuingAuthorty;
+        this.papersValidity = papersValidity;
+        this.profession = profession;
+        this.educationDegreeID = educationDegreeID;
+        this.passengerLevelID = passengerLevelID;
+        this.papersID = papersID;
+        this.papersNumber = papersNumber;
+        this.unitsOrAddress = unitsOrAddress;
+        this.thingReasonID = thingReasonID;
+        this.whereAreFrom = whereAreFrom;
+        this.whereToGo = whereToGo;
+        this.contacPhoneNumber = contacPhoneNumber;
+        this.remarks = remarks;
+    }
+    public Passenger(Integer id, String name, Integer genderID, String birthDate, Integer nationID, String licenceIssuingAuthorty, String papersValidity, String profession, Integer educationDegreeID, Integer passengerLevelID, Integer papersID, String papersNumber, String unitsOrAddress, Integer thingReasonID, String whereAreFrom, String whereToGo, String contacPhoneNumber, String remarks, String genderName, String papersName) {
+        this.id = id;
+        this.name = name;
+        this.genderID = genderID;
+        this.birthDate = birthDate;
+        this.nationID = nationID;
+        this.licenceIssuingAuthorty = licenceIssuingAuthorty;
+        this.papersValidity = papersValidity;
+        this.profession = profession;
+        this.educationDegreeID = educationDegreeID;
+        this.passengerLevelID = passengerLevelID;
+        this.papersID = papersID;
+        this.papersNumber = papersNumber;
+        this.unitsOrAddress = unitsOrAddress;
+        this.thingReasonID = thingReasonID;
+        this.whereAreFrom = whereAreFrom;
+        this.whereToGo = whereToGo;
+        this.contacPhoneNumber = contacPhoneNumber;
+        this.remarks = remarks;
+        this.genderName = genderName;
+        this.papersName = papersName;
+    }
 
     @Override
     public String toString() {
@@ -60,7 +110,7 @@ public class Passenger {
                 ", thingReasonID=" + thingReasonID +
                 ", whereAreFrom='" + whereAreFrom + '\'' +
                 ", whereToGo='" + whereToGo + '\'' +
-                ", contactPhoneNumber='" + contactPhoneNumber + '\'' +
+                ", contactPhoneNumber='" + contacPhoneNumber + '\'' +
                 ", remarks='" + remarks + '\'' +
                 '}';
     }
@@ -81,12 +131,20 @@ public class Passenger {
         this.name = name;
     }
 
-    public String getGenderID() {
+    public Integer getGenderID() {
         return genderID;
     }
 
-    public void setGenderID(String genderID) {
+    public void setGenderID(Integer genderID) {
         this.genderID = genderID;
+    }
+
+    public String getContacPhoneNumber() {
+        return contacPhoneNumber;
+    }
+
+    public void setContacPhoneNumber(String contacPhoneNumber) {
+        this.contacPhoneNumber = contacPhoneNumber;
     }
 
     public String getBirthDate() {
@@ -194,11 +252,11 @@ public class Passenger {
     }
 
     public String getContactPhoneNumber() {
-        return contactPhoneNumber;
+        return contacPhoneNumber;
     }
 
     public void setContactPhoneNumber(String contactPhoneNumber) {
-        this.contactPhoneNumber = contactPhoneNumber;
+        this.contacPhoneNumber = contactPhoneNumber;
     }
 
     public String getRemarks() {
@@ -206,32 +264,6 @@ public class Passenger {
     }
 
     public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public Passenger() {
-
-    }
-
-    public Passenger(Integer id, String name, String genderID, String birthDate, Integer nationID, String licenceIssuingAuthorty, String papersValidity, String profession, Integer educationDegreeID, Integer passengerLevelID, Integer papersID, String papersNumber, String unitsOrAddress, Integer thingReasonID, String whereAreFrom, String whereToGo, String contactPhoneNumber, String remarks) {
-
-        this.id = id;
-        this.name = name;
-        this.genderID = genderID;
-        this.birthDate = birthDate;
-        this.nationID = nationID;
-        this.licenceIssuingAuthorty = licenceIssuingAuthorty;
-        this.papersValidity = papersValidity;
-        this.profession = profession;
-        this.educationDegreeID = educationDegreeID;
-        this.passengerLevelID = passengerLevelID;
-        this.papersID = papersID;
-        this.papersNumber = papersNumber;
-        this.unitsOrAddress = unitsOrAddress;
-        this.thingReasonID = thingReasonID;
-        this.whereAreFrom = whereAreFrom;
-        this.whereToGo = whereToGo;
-        this.contactPhoneNumber = contactPhoneNumber;
         this.remarks = remarks;
     }
 

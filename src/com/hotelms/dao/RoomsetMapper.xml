@@ -154,10 +154,18 @@
       </foreach>
     </where>
   </delete>
+
   <select id="selectUsableRooms" resultType="roomSet">
     SELECT * FROM roomset
     <where>
       roomStateID = 1
+    </where>
+  </select>
+
+  <select id="selectUsableRoomsByRoomNumber" parameterType="string" resultType="roomSet">
+    SELECT * FROM roomset
+    <where>
+      roomStateID = 1 AND roomNumber LIKE #{roomNumber}
     </where>
   </select>
 

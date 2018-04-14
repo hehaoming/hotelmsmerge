@@ -142,12 +142,25 @@ public class RoomsetServiceImpl implements RoomsetService{
         roomsetMapper.deleteRoomByIds(roomIDs);
     }
 
-    public List<Roomset> findUsableRooms() {
 
-        List<Roomset> roomsets = roomsetMapper.selectUsableRooms();
-        for(Roomset roomset : roomsets) {
-            roomset.setRoomStateName("空房");
-            roomset.setGuestRoomLevelName(itemMapper.getOneNameOfItem(roomset.getGuestRoomLevelID()));
+    /**
+     * 查询可用房间，并将房态字段和房间级别字段注入
+     * @param roomNumber 房间号
+     * @return 可用房间集合
+     */
+    public List<Roomset> findUsableRooms(String roomNumber) {
+
+        List<Roomset> roomsets;
+        if(roomNumber == null || roomNumber.length() == 0) {
+            roomsets = roomsetMapper.selectUsableRooms();
+        }else {
+            roomsets = roomsetMapper.selectUsableRoomsByRoomNumber("%" + roomNumber + "%");
+        }
+        if(roomsets != null && roomsets.size() != 0) {
+            for (Roomset roomset : roomsets) {
+                roomset.setRoomStateName("空房");
+                roomset.setGuestRoomLevelName(itemMapper.getOneNameOfItem(roomset.getGuestRoomLevelID()));
+            }
         }
         return roomsets;
     }

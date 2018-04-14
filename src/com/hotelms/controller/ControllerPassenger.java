@@ -22,7 +22,7 @@ public class ControllerPassenger {
     @RequestMapping("Passenger/toadd.do")
     public String getLiset(Model model) {
         List<ItemBean> listGeander = passengerService.getListOfItem(5);
-        List<ItemBean> listNation = passengerService.getListOfItem(12);
+        List<ItemBean> listNation = passengerService.getListOfItem(16);
         List<ItemBean> listEducationDegree = passengerService.getListOfItem(6);
         List<ItemBean> listPassengerLevel = passengerService.getListOfItem(7);
         List<ItemBean> listPapers = passengerService.getListOfItem(8);
@@ -95,7 +95,7 @@ public class ControllerPassenger {
         Passenger passenger = passengerService.selectByPrimaryKey(id);
 
         List<ItemBean> listGeander = passengerService.getListOfItem(5);
-        List<ItemBean> listNation = passengerService.getListOfItem(12);
+        List<ItemBean> listNation = passengerService.getListOfItem(16);
         List<ItemBean> listEducationDegree = passengerService.getListOfItem(6);
         List<ItemBean> listPassengerLevel = passengerService.getListOfItem(7);
         List<ItemBean> listPapers = passengerService.getListOfItem(8);

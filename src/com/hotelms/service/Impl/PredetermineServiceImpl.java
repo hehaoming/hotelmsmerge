@@ -168,7 +168,12 @@ public class PredetermineServiceImpl implements PredetermineService {
 
         for(int id : ids) {
             Predetermine predetermine = predetermineMapper.selectPredetermineByID(id);
-            stayregisterMapper.insertRegisterByPredetermine(predetermine);//增加订单
+            int money = predetermine.getPredetermineDay() * roomsetMapper.selectRoomByID(predetermine.getRoomID())
+                    .getStandarPriceDay();
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("predetermine",predetermine);
+            map.put("money",money);
+            stayregisterMapper.insertRegisterByPredetermine(map);//增加订单
             predetermineMapper.updatePredetermineStateNameToOverById(id);//更改预订单状态为已安排
             roomsetMapper.updateRoomStateIDByIDToUsed(predetermine.getRoomID());//更改房间状态为满
         }

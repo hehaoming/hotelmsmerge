@@ -9,7 +9,7 @@
         <result property="teamCode" column="teamCode"/>
         <result property="registerTime" column="registerTime"/>
         <result property="contactPhoneNUmber" column="contactPhoneNUmber"/>
-        <association property="ItemBean"
+        <association property="targetType"
                      javaType="ItemBean"
                      select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
                      column="targetTypeID">
@@ -20,7 +20,7 @@
     </resultMap>
 
 
-    <select id="getAllTeamObject"  parameterType="hashmap" resultMap="allTeamObject" >
+    <select id="getAllTeamObject" parameterType="hashmap" resultMap="allTeamObject">
         select * from team
         <where>
             <if test="txtname != null and txtname != ''">
@@ -29,7 +29,7 @@
         </where>
     </select>
 
-    <select id="queryitemBeanByTargetTypeID"  parameterType="int" resultType="ItemBean">
+    <select id="queryitemBeanByTargetTypeID" parameterType="int" resultType="ItemBean">
         select * from itemdetails WHERE itemDetailsID=#{itemDetailsID}
     </select>
 
@@ -62,7 +62,7 @@
     </resultMap>
 
 
-    <select id="getAllRoomObject" parameterType="hashmap" resultMap="allRoomObject" >
+    <select id="getAllRoomObject" parameterType="hashmap" resultMap="allRoomObject">
         select * from roomset
         <where>
             <if test="guestRoomLevelID != 0">
@@ -75,7 +75,7 @@
          select * from roomset WHERE roomID=#{roomID}
     </select>
 
-    <insert id="saveStayRegister" parameterType="stayRegisterBean" >
+    <insert id="saveStayRegister" parameterType="stayRegisterBean">
         INSERT INTO stayregister VALUES (NULL ,#{room.roomID},NULL ,
         <choose>
             <when test="team != null">
@@ -86,7 +86,7 @@
             </otherwise>
         </choose>
         #{passengerType.itemDetailsID},#{rentOutType.itemDetailsID},#{stayNumber},#{deposit},#{billUnit.itemDetailsID},
-        #{depositPayWay.itemDetailsID},NULL,NULL,NULL,#{stayRegisterTime},0,#{sumConst})
+        #{depositPayWay.itemDetailsID},0,0,NULL,#{stayRegisterTime},0,#{sumConst},NULL)
     </insert>
 
     <update id="updateRoomState" parameterType="hashmap">
@@ -99,7 +99,7 @@
         LEFT OUTER JOIN passenger ON stayregister.passenger=passenger.id
         <where>
             <choose>
-                <when test="targetType == 55">
+                <when test="targetType == 72">
                     team IS NULL
                 </when>
                 <otherwise>
@@ -107,6 +107,20 @@
                 </otherwise>
             </choose>
         </where>
+    </select>
+
+<!--    //from 陈志雄  标记-->
+    <select id="analysisAllInfo" resultMap="allStayRegisyerObject">
+        SELECT * FROM stayregister LEFT OUTER JOIN roomset ON stayregister.room=roomset.roomID
+        LEFT OUTER JOIN team ON stayregister.team=team.tuanduiID
+        LEFT OUTER JOIN passenger ON stayregister.passenger=passenger.id
+    </select>
+
+    <select id="getStayRegisyerObjectById" parameterType="int" resultMap="allStayRegisyerObject">
+        SELECT * FROM stayregister LEFT OUTER JOIN roomset ON stayregister.room=roomset.roomID
+        LEFT OUTER JOIN team ON stayregister.team=team.tuanduiID
+        LEFT OUTER JOIN passenger ON stayregister.passenger=passenger.id
+        WHERE stayregisterdetailId=#{id}
     </select>
 
     <resultMap id="allStayRegisyerObject" type="stayRegisterBean">
@@ -119,6 +133,7 @@
         <result property="stayRegisterTime" column="stayRegisterTime"/>
         <result property="isBillId" column="isBillId"/>
         <result property="sumConst" column="sumConst"/>
+        <result property="payTime" column="payTime"/>
         <association property="passengerType"
                      javaType="ItemBean"
                      select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
@@ -186,7 +201,7 @@
             <result property="teamCode" column="teamCode"/>
             <result property="registerTime" column="registerTime"/>
             <result property="contactPhoneNUmber" column="contactPhoneNUmber"/>
-            <association property="ItemBean"
+            <association property="targetType"
                          javaType="ItemBean"
                          select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
                          column="targetTypeID">
@@ -198,6 +213,17 @@
 
         <association property="passenger" javaType="passengerStayRegisterVO">
             <id column="id" property="id"/>
+            <result property="name" column="name"/>
+            <result property="birthDate" column="birthDate"/>
+            <result property="licenceIssuingAuthorty" column="licenceIssuingAuthorty"/>
+            <result property="papersValidity" column="papersValidity"/>
+            <result property="profession" column="profession"/>
+            <result property="papersNumber" column="papersNumber"/>
+            <result property="unitsOrAddress" column="unitsOrAddress"/>
+            <result property="whereAreFrom" column="whereAreFrom"/>
+            <result property="whereToGo" column="whereToGo"/>
+            <result property="contacPhoneNumber" column="whercontacPhoneNumber"/>
+            <result property="remarks" column="remarks"/>
             <association property="gender"
                          javaType="ItemBean"
                          select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
@@ -238,11 +264,11 @@
     </resultMap>
 
 
-    <select id="getAllPassengerObject"  parameterType="hashmap" resultMap="allPassengerObject" >
+    <select id="getAllPassengerObject" parameterType="hashmap" resultMap="allPassengerObject">
         select * from passenger
         <where>
             <if test="txtname != null and txtname != ''">
-                teamName LIKE '%${txtname}%'
+                name LIKE '%${txtname}%'
             </if>
         </where>
     </select>
@@ -255,12 +281,12 @@
                      column="genderID">
             <id column="itemDetailsID" property="itemDetailsID"/>
         </association>
-       <!-- <association property="nation"
-                     javaType="ItemBean"
-                     select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
-                     column="nationID">
-            <id column="itemDetailsID" property="itemDetailsID"/>
-        </association>-->
+         <association property="nation"
+                      javaType="ItemBean"
+                      select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
+                      column="nationID">
+             <id column="itemDetailsID" property="itemDetailsID"/>
+         </association>
         <association property="educationDegree"
                      javaType="ItemBean"
                      select="com.hotelms.dao.SatyregisterMapper.queryitemBeanByTargetTypeID"
@@ -287,12 +313,49 @@
         </association>
     </resultMap>
 
-    
-  <insert id="insertRegisterByPredetermine" parameterType="predetermine">
-    INSERT INTO stayregister VALUES (NULL ,#{roomID},#{passengerID},#{tuanduiID},76 ,74
-    ,#{predetermineDay} ,#{deposit},
-    <if test="type == 1">79</if>
-    <if test="type == 2">78</if>
-     ,#{payWayID},NULL ,NULL ,NULL ,#{arriveTime} ,0,NULL)
+
+   <insert id="insertRegisterByPredetermine" parameterType="hashmap">
+    INSERT INTO stayregister VALUES (NULL ,#{predetermine.roomID},#{predetermine.passengerID},#{predetermine.tuanduiID},76 ,74
+    ,#{predetermine.predetermineDay} ,#{predetermine.deposit},
+    <if test="predetermine.type == 1">79</if>
+    <if test="predetermine.type == 2">78</if>
+     ,#{predetermine.payWayID},0 ,0 ,NULL ,#{predetermine.arriveTime} ,0,#{money},NULL )
   </insert>
+
+    <select id="getPassengerById" parameterType="int" resultMap="allPassengerObject">
+        SELECT * FROM passenger WHERE id=#{id}
+    </select>
+
+    <insert id="savePassenger" parameterType="passengerStayRegisterVO">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
+        INSERT INTO passenger(id,name,genderID,birthDate,nationID,licenceIssuingAuthorty,papersValidity,profession,
+        educationDegreeID,passengerLevelID,papersID,papersNumber,unitsOrAddress,thingReasonID,whereAreFrom,whereToGo,
+        contacPhoneNumber,remarks) VALUES (null,#{gender.itemDetailsID},#{birthDate},#{nation.itemDetailsID},#{licenceIssuingAuthorty},
+        #{papersValidity},#{profession},#{educationDegree.itemDetailsID},#{papers.itemDetailsID},#{papersNumber},
+        #{unitsOrAddress},#{thingReasonID.itemDetailsID},#{whereAreFrom},#{whereToGo},#{contacPhoneNumber},#{remarks})
+    </insert>
+
+    <update id="savePassengerRegister" parameterType="hashmap">
+        UPDATE stayregister SET passenger=#{id} WHERE stayregisterdetailId=#{stayRegisterID}
+    </update>
+
+    <select id="getRoomObjectByRoomId" parameterType="java.util.List" resultMap="allRoomObject">
+        SELECT * FROM roomset WHERE roomID IN
+        <foreach collection="array" index="index" item="item"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <update id="changeStayRegisterRoom" parameterType="hashmap">
+        UPDATE stayregister SET room=#{room},changingRoomMoney=#{changingRoomMoney},changingRoomTime=#{changingRoomTime},
+        changingRoomNumber=changingRoomNumber+1,sumConst=sumConst+#{changingRoomMoney} WHERE stayregisterdetailId=#{stayregisterdetailId}
+    </update>
+
+
+    <update id="addDeposit" parameterType="hashmap">
+        UPDATE stayregister SET deposit=deposit+#{deposit},depositPayWayId=#{depositPayWayId} WHERE stayregisterdetailId=#{stayregisterdetailId}
+    </update>
 </mapper>

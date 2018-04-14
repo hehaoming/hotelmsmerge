@@ -171,9 +171,9 @@
 			  <div class="span5 ">
 			   	  <label class="labelroomnumber">商品类别：</label>
 			      <select name="commodityTypeID" class="cboone inputone">
-		            <c:forEach items="${listTwo}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==16}" >selected="selected"</c:if>>
-			            ${item.attributeDetailsName}
+		            <c:forEach items="${listOne}" var="item">
+			          <option value="${item.itemDetailsID}" <c:if test="${item.itemDetailsID==19}" >selected="selected"</c:if>>
+			            ${item.category}
 			          </option>
 			        </c:forEach> 
 		          </select>
@@ -196,11 +196,11 @@
 			  <div class="span5">
 			   	  <label class="labelroomnumber">计量单位：</label>
 			      <select name="uOMID" class="cboone inputone">
-		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==57}">selected="selected"</c:if>>
-			            ${item.attributeDetailsName}
+		            <c:forEach items="${listTwo}" var="item">
+			          <option value="${item.itemDetailsID}" <c:if test="${item.itemDetailsID==24}">selected="selected"</c:if>>
+			            ${item.category}
 			          </option>
-			        </c:forEach> 
+			        </c:forEach>
 		          </select>
 			  </div>
 		  </div>
