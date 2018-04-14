@@ -131,21 +131,16 @@
 	      <tbody id="tbody">
 	        <c:forEach items="${list.result}" var="item">
 		        <tr >
-		          <td><input type="radio" name="id" value="${item.id}"></td>
+		          <td><input type="radio" name="id" value="${item.stayRegisterDetailId}"></td>
 		          <td>${item.roomNumber}</td>
-		          <c:if test="${item.receiveTargetID==2}">
-		              <td>${item.predetermineReceiveTargeTypeName}</td>
-		          </c:if>
-		          <c:if test="${item.receiveTargetID!=2}">
-		              <td style="width:15%;">${item.receiveTeamName}</td>
-		          </c:if>
-		          <td>${item.passengerName}</td>
+				  <td style="width:15%;">${item.receptionName}</td>
+		          <td>${item.personName}</td>
 		          <td>${item.changingRoomNumber}</td>
-		          <td>${item.changRoomTime}</td>
-		          <td>${item.registerTime}</td>
+		          <td>${item.changingRoomTime}</td>
+		          <td>${item.stayRegisterTime}</td>
 		          <td>${item.payTime}</td>
 		          <td>${item.sumConst}</td>
-		          <td hidden>${item.stayregisterdetailsId}</td>
+		          <td hidden>${item.stayRegisterDetailId}</td>
 		        </tr>
 	        </c:forEach>
 	      </tbody>
