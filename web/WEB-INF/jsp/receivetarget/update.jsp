@@ -152,7 +152,7 @@
   </head>
   
  
-  <body > 
+<body>
   <div class="container">
   
     <div class="span11" style=" border: solid; border-color: #DDDDDD;">
@@ -174,11 +174,11 @@
 					  <%--${item.attributeDetailsName}--%>
 					  <%--</option>--%>
 					  <%--</c:forEach> --%>
-					  <option value="55"
-							  <c:if test="${55 ==list.targetTypeID}">selected="selected"</c:if> >散客
+					  <option value="72"
+							  <c:if test="${72 ==list.targetTypeID}">selected="selected"</c:if> >散客
 					  </option>
-					  <option value="56"
-							  <c:if test="${56 ==list.targetTypeID}">selected="selected"</c:if> >团队
+					  <option value="73"
+							  <c:if test="${73 ==list.targetTypeID}">selected="selected"</c:if> >团队
 					  </option>
 		          </select>
 			  </div>
@@ -385,5 +385,5 @@
        
  </script>
    
-  </body>
+</body>
 </html>
