@@ -69,4 +69,11 @@ public interface RoomsetMapper {
      * @return 房间信息
      */
     public Roomset selectRoomByID(Integer roomID);
+
+    /**
+     * 根据房间号查询可用房间
+     * @param roomNumber 可用房间号
+     * @return 符合条件的可用房间
+     */
+    public List<Roomset> selectUsableRoomsByRoomNumber(String roomNumber);
 }

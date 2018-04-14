@@ -17,4 +17,20 @@ public interface SatyregisterService {
     List<StayRegisterBean> getAllStayRegisyerObject(int targetType);
 
     List<PassengerStayRegisterVO> getAllPassengerObject(String txtname);
+
+    PassengerStayRegisterVO getPassengerById(int id);
+
+    void savePassengerAndRegister(PassengerStayRegisterVO passenger,int stayRegisterID);
+
+    void passengerRegister(PassengerStayRegisterVO passenger, int stayRegisterID);
+
+    List<RoomStayRegisterVO> getRoomObjectByRoomId(String[] id);
+
+    void volumeStayRegister(StayRegisterBean stayRegisterBean, int[] roomId);
+
+    StayRegisterBean getStayRegisyerObjectById(int id);
+
+    void changeStayRegisterRoom(String id, String roomId, String changRoomMoney, String changRoomTime);
+
+    void addDeposit(int depositPayWayID, int stayregisterdetailId, int deposit);
 }

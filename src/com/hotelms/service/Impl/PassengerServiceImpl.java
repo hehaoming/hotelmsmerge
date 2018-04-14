@@ -95,7 +95,7 @@ public class PassengerServiceImpl implements PassengerService {
         List<Passenger> passengers = passengerMapper.selectAllPassengers();
         for (Passenger passenger : passengers) {
             //查询性别字段
-            passenger.setGenderName(itemMapper.getOneNameOfItem(Integer.parseInt(passenger.getGenderID())));
+            passenger.setGenderName(itemMapper.getOneNameOfItem(passenger.getGenderID()));
             //查询证件名称字段
             passenger.setPapersName(itemMapper.getOneNameOfItem(passenger.getPapersID()));
         }

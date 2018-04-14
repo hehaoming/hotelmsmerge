@@ -13,21 +13,13 @@ public class TeamStayRegisterVO {
     registerTime       VARCHAR(64) NULL,
     contactPhoneNUmber VARCHAR(11) NULL*/
     private int tuanduiID;
-    private ItemBean itemBean;
+    private ItemBean targetType;
     private String principal;
     private String teamName;
     private String teamCode;
     private String registerTime;
     private String contactPhoneNUmber;
 
-
-    public com.hotelms.bean.ItemBean getItemBean() {
-        return itemBean;
-    }
-
-    public void setItemBean(com.hotelms.bean.ItemBean ItemBean) {
-        this.itemBean = itemBean;
-    }
 
     public String getPrincipal() {
         return principal;
@@ -69,24 +61,32 @@ public class TeamStayRegisterVO {
         this.contactPhoneNUmber = contactPhoneNUmber;
     }
 
-    @Override
-    public String toString() {
-        return "TeamStayRegisterVO{" +
-                "tuanduiID='" + tuanduiID + '\'' +
-                ", ItemBean=" + itemBean +
-                ", principal='" + principal + '\'' +
-                ", teamName='" + teamName + '\'' +
-                ", teamCode='" + teamCode + '\'' +
-                ", registerTime='" + registerTime + '\'' +
-                ", contactPhoneNUmber='" + contactPhoneNUmber + '\'' +
-                '}';
-    }
-
     public int getTuanduiID() {
         return tuanduiID;
     }
 
     public void setTuanduiID(int tuanduiID) {
         this.tuanduiID = tuanduiID;
+    }
+
+    public ItemBean getTargetType() {
+        return targetType;
+    }
+
+    public void setTargetType(ItemBean targetType) {
+        this.targetType = targetType;
+    }
+
+    @Override
+    public String toString() {
+        return "TeamStayRegisterVO{" +
+                "tuanduiID=" + tuanduiID +
+                ", targetType=" + targetType +
+                ", principal='" + principal + '\'' +
+                ", teamName='" + teamName + '\'' +
+                ", teamCode='" + teamCode + '\'' +
+                ", registerTime='" + registerTime + '\'' +
+                ", contactPhoneNUmber='" + contactPhoneNUmber + '\'' +
+                '}';
     }
 }

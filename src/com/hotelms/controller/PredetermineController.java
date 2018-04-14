@@ -193,7 +193,7 @@ public class PredetermineController {
     @RequestMapping("selectRoom")
     public List<Roomset> findUsableRooms(@RequestParam String roomNumber) {
 
-        List<Roomset> usableRooms = roomSetService.findUsableRooms();
+        List<Roomset> usableRooms = roomSetService.findUsableRooms(roomNumber);
         return usableRooms;
     }
 

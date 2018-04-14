@@ -101,13 +101,13 @@
   <insert id="addpassenge" parameterType="com.hotelms.bean.Passenger">
     insert into passenger  values (#{id}, #{name}, #{genderID}, #{birthDate}, #{nationID}, #{licenceIssuingAuthorty}, #{papersValidity},
     #{profession}, #{educationDegreeID}, #{passengerLevelID}, #{papersID}, #{papersNumber}, #{unitsOrAddress},
-    #{thingReasonID}, #{whereAreFrom}, #{whereToGo}, #{contactPhoneNumber}, #{remarks});
+    #{thingReasonID}, #{whereAreFrom}, #{whereToGo}, #{contacPhoneNumber}, #{remarks});
   </insert>
 
    <update id="updateByPrimaryKey" parameterType="com.hotelms.bean.Passenger">
        UPDATE passenger SET name = #{name} ,genderID = #{genderID},birthDate = #{birthDate},nationID = #{nationID}, licenceIssuingAuthorty =#{licenceIssuingAuthorty},
        papersValidity = #{papersValidity} ,profession = #{profession},educationDegreeID = #{educationDegreeID},passengerLevelID = #{passengerLevelID},papersID = #{papersID},
-       papersNumber = #{papersNumber},unitsOrAddress = #{unitsOrAddress},thingReasonID = #{thingReasonID},whereAreFrom = #{whereAreFrom},whereToGo = #{whereToGo},contactPhoneNumber= #{contactPhoneNumber},
+       papersNumber = #{papersNumber},unitsOrAddress = #{unitsOrAddress},thingReasonID = #{thingReasonID},whereAreFrom = #{whereAreFrom},whereToGo = #{whereToGo},contacPhoneNumber= #{contacPhoneNumber},
        remarks = #{remarks} WHERE id = #{id};
    </update>
 
@@ -132,7 +132,7 @@
         <result column="thingReasonID" jdbcType="INTEGER" property="thingReasonID" />
         <result column="whereAreFrom" jdbcType="VARCHAR" property="whereAreFrom" />
         <result column="whereToGo" jdbcType="VARCHAR" property="whereToGo" />
-        <result column="contactPhoneNumber" jdbcType="INTEGER" property="contactPhoneNumber" />
+        <result column="contacPhoneNumber" jdbcType="INTEGER" property="contacPhoneNumber" />
         <result column="remarks" jdbcType="VARCHAR" property="remarks" />
 
         <association property="genderName" javaType="ItemBean"
@@ -171,7 +171,7 @@
     </select>
 
     <select id="selectPassengerPhoneNumberByID" resultType="string" parameterType="int">
-        SELECT contactPhoneNumber FROM passenger
+        SELECT contacPhoneNumber FROM passenger
         <where>
             id = #{id}
         </where>

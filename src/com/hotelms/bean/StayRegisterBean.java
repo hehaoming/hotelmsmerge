@@ -22,6 +22,7 @@ public class StayRegisterBean {
     private String stayRegisterTime;
     private int isBillId;
     private String sumConst;
+    private String payTime;
     public int getStayregisterdetailId() {
         return stayregisterdetailId;
     }
@@ -120,28 +121,6 @@ public class StayRegisterBean {
         this.sumConst = sumConst;
     }
 
-    @Override
-    public String toString() {
-        return "StayRegisterBean{" +
-                "stayregisterdetailId=" + stayregisterdetailId +
-                ", room=" + room +
-                ", passenger=" + passenger +
-                ", team=" + team +
-                ", passengerType=" + passengerType +
-                ", rentOutType=" + rentOutType +
-                ", stayNumber=" + stayNumber +
-                ", deposit=" + deposit +
-                ", billUnit=" + billUnit +
-                ", depositPayWay=" + depositPayWay +
-                ", changingRoomNumber='" + changingRoomNumber + '\'' +
-                ", changingRoomMoney='" + changingRoomMoney + '\'' +
-                ", changingRoomTime='" + changingRoomTime + '\'' +
-                ", stayRegisterTime='" + stayRegisterTime + '\'' +
-                ", isBillId=" + isBillId +
-                ", sumConst='" + sumConst + '\'' +
-                '}';
-    }
-
     public String getChangingRoomNumber() {
         return changingRoomNumber;
     }
@@ -172,5 +151,36 @@ public class StayRegisterBean {
 
     public void setStayRegisterTime(String stayRegisterTime) {
         this.stayRegisterTime = stayRegisterTime;
+    }
+
+    public String getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(String payTime) {
+        this.payTime = payTime;
+    }
+
+    @Override
+    public String toString() {
+        return "StayRegisterBean{" +
+                "stayregisterdetailId=" + stayregisterdetailId +
+                ", room=" + room +
+                ", passenger=" + passenger +
+                ", team=" + team +
+                ", passengerType=" + passengerType +
+                ", rentOutType=" + rentOutType +
+                ", stayNumber=" + stayNumber +
+                ", deposit=" + deposit +
+                ", billUnit=" + billUnit +
+                ", depositPayWay=" + depositPayWay +
+                ", changingRoomNumber='" + changingRoomNumber + '\'' +
+                ", changingRoomMoney='" + changingRoomMoney + '\'' +
+                ", changingRoomTime='" + changingRoomTime + '\'' +
+                ", stayRegisterTime='" + stayRegisterTime + '\'' +
+                ", isBillId=" + isBillId +
+                ", sumConst='" + sumConst + '\'' +
+                ", payTime='" + payTime + '\'' +
+                '}';
     }
 }

@@ -30,9 +30,10 @@ public interface RoomsetService {
 
     void deleteRoomByIds(String[] roomIDs);
 
-        /**
+    /**
      * 查询可用房间，并将房态字段和房间级别字段注入
+     * @param roomNumber 房间号
      * @return 可用房间集合
      */
-    public List<Roomset> findUsableRooms();
+    public List<Roomset> findUsableRooms(String roomNumber);
 }

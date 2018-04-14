@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hotelms.dao.FinancialStatisticsMapper">
+
+    <select id="selectAllBilledStayRegisterNumberWithDate" parameterType="hashmap" resultType="int">
+        SELECT COUNT(*) FROM stayregister
+        <where>
+          <include refid="billedStayRegisterNumberWithDate"></include>
+        </where>
+    </select>
+
+    <sql id="billedStayRegisterNumberWithDate">
+            isBillId = 1
+            <if test="datemin != null and datemin.length() != 0">
+                AND payTime >= #{datemin}
+            </if>
+            <if test="datemax != null and datemax.length() != 0">
+                AND payTime &lt;= #{datemax}
+            </if>
+    </sql>
+
+    <select id="selectSomeBilledStayRegistersWithDate" parameterType="hashmap" resultType="stayRegister">
+        SELECT * FROM stayregister
+        <where>
+            <include refid="billedStayRegisterNumberWithDate"></include>
+            limit #{limit} offset #{offset}
+        </where>
+    </select>
+
+    <select id="selectConsumptionsByStayId" parameterType="int" resultType="consumption">
+        SELECT * FROM consumption
+        <where>
+            stayregisterId = #{stayRegisterDetailId}
+        </where>
+    </select>
+</mapper>
