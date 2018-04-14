@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+@Service
 public class ReceiveTargetBean {
 
     /*
@@ -51,7 +52,7 @@ public class ReceiveTargetBean {
 
     public String getTargetTypeName() {
         String re = null;
-        if (getTargetTypeID() == 55) {
+        if (getTargetTypeID() == 72) {
             re = "散客";
         } else {
             re = "团队";

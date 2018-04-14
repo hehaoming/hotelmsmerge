@@ -8,17 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import sun.misc.Request;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ReceiveTargetController {
 
     @Autowired
     ReceiveTargetService receiveTargetService;
+
 
 
     /*增*/
@@ -125,37 +128,37 @@ public class ReceiveTargetController {
 //        return modelAndView;
 //    }
 
-    @RequestMapping("/ReceiveTarget/tolist.do")
-    public ModelAndView findReceiveTargetByName(HttpServletRequest request) {
-
-        String page1 = request.getParameter("currentPage");
-        int page;
-
-
-        if (page1 != null) {
-            page = Integer.parseInt(page1);
-        } else {
-            page = 1;
-        }
-
-        ModelAndView modelAndView = new ModelAndView();
-        String txtname = request.getParameter("txtname");
-
-
-        List<ReceiveTargetBean> receiveTargetBeanList = receiveTargetService.findReceiveTargetByName(txtname);
-        list.setResult(receiveTargetBeanList);
-        list.setCurrentPage(page);
-        list.setTotalPageByItemNum(receiveTargetBeanList.size() + 1, 10);
-
-        //强行分页
-        listByLimit = pageUtils(list, page);
-
-        modelAndView.addObject("list", listByLimit);
-
-        modelAndView.setViewName("/WEB-INF/jsp/receivetarget/list.jsp");
-
-        return modelAndView;
-    }
+//    @RequestMapping("/ReceiveTarget/tolist.do")
+//    public ModelAndView findReceiveTargetByName(HttpServletRequest request) {
+//
+//        String page1 = request.getParameter("currentPage");
+//        int page;
+//
+//
+//        if (page1 != null) {
+//            page = Integer.parseInt(page1);
+//        } else {
+//            page = 1;
+//        }
+//
+//        ModelAndView modelAndView = new ModelAndView();
+//        String txtname = request.getParameter("txtname");
+//
+//
+//        List<ReceiveTargetBean> receiveTargetBeanList = receiveTargetService.findReceiveTargetByName(txtname);
+//        list.setResult(receiveTargetBeanList);
+//        list.setCurrentPage(page);
+//        list.setTotalPageByItemNum(receiveTargetBeanList.size(), 10);
+//
+//        //强行分页
+//        listByLimit = pageUtils(list, page);
+//
+//        modelAndView.addObject("list", listByLimit);
+//
+//        modelAndView.setViewName("/WEB-INF/jsp/receivetarget/list.jsp");
+//
+//        return modelAndView;
+//    }
 
 
 //    @RequestMapping("/ReceiveTargetBean/tolist.do")
@@ -175,7 +178,7 @@ public class ReceiveTargetController {
 //        list.setResult(receiveTargetBeanList);
 //
 //        list.setCurrentPage(page);
-//        list.setTotalPageByItemNum(receiveTargetBeanList.size() + 1, 10);
+//        list.setTotalPageByItemNum(receiveTargetBeanList.size() , 10);
 //
 //        ModelAndView modelAndView = new ModelAndView();
 //
@@ -187,30 +190,44 @@ public class ReceiveTargetController {
 //    }
 
 
-//    @RequestMapping(value ={"/ReceiveTargetBean/tolist.do","/ReceiveTarget/tolist.do"} )
-//    public ModelAndView findAllReceiveTar(HttpServletRequest request) {
-//
-//        String txtname = request.getParameter("txtname");
-//        List<ReceiveTargetBean> receiveTargetBeanList;
-//
-//        if(txtname != null) {
-//            receiveTargetBeanList = receiveTargetService.findReceiveTargetByName(txtname);
-//        }else {
-//            receiveTargetBeanList = receiveTargetService.findAllReceiveTarget();
-//        }
-//
-//            list.setResult(receiveTargetBeanList);
-//            list.setCurrentPage(1);
-//            list.setTotalPageByItemNum(receiveTargetBeanList.size() + 1, 10);
-//
-//        ModelAndView modelAndView = new ModelAndView();
-//
-//        modelAndView.addObject("list", list);
-//
-//        modelAndView.setViewName("/WEB-INF/jsp/receivetarget/list.jsp");
-//
-//        return modelAndView;
-//    }
+    @RequestMapping(value = {"/ReceiveTargetBean/tolist.do", "/ReceiveTarget/tolist"})
+    public ModelAndView findAllReceiveTar(HttpServletRequest request) {
+
+        //请求页面
+        String page1 = request.getParameter("currentPage");
+        int page;
+
+        if (page1 != null) {
+            page = Integer.parseInt(page1);
+        } else {
+            page = 1;
+        }
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        //查询选择
+        String txtname = request.getParameter("txtname");
+        List<ReceiveTargetBean> receiveTargetBeanList;
+
+        if (txtname != null) {
+            receiveTargetBeanList = receiveTargetService.findReceiveTargetByName(txtname);
+            modelAndView.addObject("txtname", txtname);
+        } else {
+            receiveTargetBeanList = receiveTargetService.findAllReceiveTarget();
+        }
+
+        list.setResult(receiveTargetBeanList);
+        list.setCurrentPage(page);
+        list.setTotalPageByItemNum(receiveTargetBeanList.size(), 10);
+        listByLimit = pageUtils(list, page);
+
+
+        modelAndView.addObject("list", listByLimit);
+
+        modelAndView.setViewName("/WEB-INF/jsp/receivetarget/list.jsp");
+
+        return modelAndView;
+    }
 
 
     /*
@@ -249,6 +266,10 @@ public class ReceiveTargetController {
 
 
     }
+
+
+
+    /*
     @RequestMapping("/ReceiveTargetBean/tolist.do")
     public ModelAndView findAllReceiveTarget(HttpServletRequest request) {
 
@@ -269,7 +290,7 @@ public class ReceiveTargetController {
 
 
         list.setCurrentPage(page);
-        list.setTotalPageByItemNum(receiveTargetBeanList.size() + 1, 10);
+        list.setTotalPageByItemNum(receiveTargetBeanList.size() , 10);
 
         listByLimit = pageUtils(list, page);
 
@@ -282,5 +303,6 @@ public class ReceiveTargetController {
         return modelAndView;
     }
 
+    */
 
 }
