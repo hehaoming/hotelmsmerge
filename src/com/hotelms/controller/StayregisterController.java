@@ -201,9 +201,15 @@ public class StayregisterController {
         satyregisterService.addDeposit(depositPayWayID,stayregisterdetailId,deposit);
         StayRegisterBean stayRegisterBean = satyregisterService.getStayRegisyerObjectById(stayregisterdetailId);
         model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
-        model.addAttribute("lvKeName",stayRegisterBean.getPassenger().getName());
+        if(stayRegisterBean.getPassenger() != null) {
+            model.addAttribute("lvKeName", stayRegisterBean.getPassenger().getName());
+        }
         model.addAttribute("item",stayRegisterBean);
         model.addAttribute("listTwo",ItemUtils.getListOfItem(9));
         return "/WEB-INF/jsp/stayregister/deposit.jsp";
+    }
+    @RequestMapping("/toshiftteam")
+    public String toshiftteam(){
+
     }
 }

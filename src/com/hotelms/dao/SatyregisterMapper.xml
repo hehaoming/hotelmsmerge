@@ -353,4 +353,9 @@
         UPDATE stayregister SET room=#{room},changingRoomMoney=#{changingRoomMoney},changingRoomTime=#{changingRoomTime},
         changingRoomNumber=changingRoomNumber+1,sumConst=sumConst+#{changingRoomMoney} WHERE stayregisterdetailId=#{stayregisterdetailId}
     </update>
+
+
+    <update id="addDeposit" parameterType="hashmap">
+        UPDATE stayregister SET deposit=deposit+#{deposit},depositPayWayId=#{depositPayWayId} WHERE stayregisterdetailId=#{stayregisterdetailId}
+    </update>
 </mapper>

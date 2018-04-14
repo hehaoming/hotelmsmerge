@@ -42,4 +42,6 @@ public interface SatyregisterMapper {
     StayRegisterBean getStayRegisyerObjectById(int id);
 
     void changeStayRegisterRoom(HashMap<String, String> stringStringHashMap);
+
+    void addDeposit(HashMap<String, Integer> stringStringHashMap);
 }
