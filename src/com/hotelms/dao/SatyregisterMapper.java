@@ -83,4 +83,6 @@ public interface SatyregisterMapper {
      * @return 订单集合
      */
     public List<StayRegisterBean> selectUnBilledRegistersByDateAndId(HashMap<String, String> map);
+
+    List<StayRegisterBean> getIsBillStayRegisyerObject(HashMap<String, Integer> hashMap);
 }

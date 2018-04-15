@@ -132,4 +132,6 @@ public interface SatyregisterService {
     public List<StayRegisterBean> findSomeUnBilledRegistersByDateAndId(String receiveTargetID, String datemin, String datemax);
 
     void updateStayRegisterTeam(int id, Integer receiveTargetID);
+
+    List<StayRegisterBean> getIsBillStayRegisyerObject(int isBillID, int lvKeLeiXingId);
 }

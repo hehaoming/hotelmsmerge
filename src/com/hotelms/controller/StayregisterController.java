@@ -49,6 +49,17 @@ public class StayregisterController {
     }
 
 
+    @RequestMapping("/toIsBiilList")
+    public String toIsBiilList(int isBillID,int LvKeLeiXingId,Model model){
+        List<StayRegisterBean> allStayRegisyerObject = satyregisterService.getIsBillStayRegisyerObject(isBillID,LvKeLeiXingId);
+        ListBean listBean = new ListBean();
+        listBean.setResult(allStayRegisyerObject);
+        System.out.println(allStayRegisyerObject);
+        model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
+        model.addAttribute("isBillID",isBillID);
+        model.addAttribute("list",listBean);
+        return "/WEB-INF/jsp/stayregister/list.jsp";
+    }
 
     @RequestMapping("/selectTarget")
     @ResponseBody
