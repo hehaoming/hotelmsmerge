@@ -123,7 +123,7 @@
                                 <c:if test="${isBillID==1}">selected="selected"</c:if>>
                             已结账
                         </option>
-                        <option value="2"
+                        <option value="0"
                                 <c:if test="${isBillID==0}">selected="selected"</c:if>>
                             未结账
                         </option>
@@ -219,7 +219,7 @@
                                             <c:if test="${isBillID==1}">selected="selected"</c:if>>
                                             已结账
                                     </option>
-                                <option value="2"
+                                <option value="0"
                                         <c:if test="${isBillID==0}">selected="selected"</c:if>>
                                     未结账
                                 </option>
@@ -799,7 +799,7 @@
 
     function selectChange() {
         var isBillID = document.getElementById("isBillID").value;
-        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?isBillID=' + isBillID +
+        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/toIsBiilList.do?isBillID=' + isBillID +
             '&LvKeLeiXingId=' + 72;
     }
 

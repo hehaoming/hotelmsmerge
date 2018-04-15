@@ -158,4 +158,14 @@ public class SatyregisterServiceImpl implements SatyregisterService {
         satyregisterMapper.updateStayRegisterTeam(stringStringHashMap);
     }
 
+    @Override
+    public List<StayRegisterBean> getIsBillStayRegisyerObject(int isBillID, int lvKeLeiXingId) {
+        HashMap<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("targetType",lvKeLeiXingId);
+        hashMap.put("isBillID",isBillID);
+        System.out.println(isBillID);
+        System.out.println(lvKeLeiXingId);
+        return satyregisterMapper.getIsBillStayRegisyerObject(hashMap);
+    }
+
 }

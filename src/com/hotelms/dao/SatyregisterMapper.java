@@ -46,4 +46,6 @@ public interface SatyregisterMapper {
     void addDeposit(HashMap<String, Integer> stringStringHashMap);
 
     void updateStayRegisterTeam(HashMap<String, Integer> stringStringHashMap);
+
+    List<StayRegisterBean> getIsBillStayRegisyerObject(HashMap<String, Integer> hashMap);
 }

@@ -35,4 +35,6 @@ public interface SatyregisterService {
     void addDeposit(int depositPayWayID, int stayregisterdetailId, int deposit);
 
     void updateStayRegisterTeam(int id, Integer receiveTargetID);
+
+    List<StayRegisterBean> getIsBillStayRegisyerObject(int isBillID, int lvKeLeiXingId);
 }
