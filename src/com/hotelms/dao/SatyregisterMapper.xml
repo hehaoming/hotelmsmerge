@@ -373,7 +373,7 @@
             <if test="isBillID != null and isBillID.length() != 0">
                 isBillId = #{isBillID}
             </if>
-            <if test="tuanduiID != null or tuanduiID.length() != 0">
+            <if test="tuanduiID != null and tuanduiID.length() != 0">
                AND team = #{tuanduiID}
             </if>
             <if test="txtname != null">

@@ -219,7 +219,7 @@
                                             <c:if test="${isBillID==1}">selected="selected"</c:if>>
                                             已结账
                                     </option>
-                                <option value="2"
+                                <option value="0"
                                         <c:if test="${isBillID==0}">selected="selected"</c:if>>
                                     未结账
                                 </option>
