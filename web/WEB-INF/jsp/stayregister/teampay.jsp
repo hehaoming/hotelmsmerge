@@ -212,15 +212,15 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">接待对象：</label>
-		        <label style="color:blue;">${list[0].receiveTeamName}</label>
+		        <label style="color:blue;">${team.teamName}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">团队编号：</label>
-		        <label>${list[0].receiveTeamCode}</label>
+		        <label>${team.teamCode}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">负责人：</label>
-		        <label>${list[0].receivePrincipal}</label>
+		        <label>${team.principal}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -246,8 +246,8 @@
 		        <label class="floatont">结账方式：</label>
 		        <select id="payWay" style="width:70%;height:27px;">
 		            <c:forEach items="${listPayWay}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==22}">selected="selected"</c:if>>
-			            ${item.attributeDetailsName}
+			          <option value="${item.itemDetailsID}" <c:if test="${item.itemDetailsID==69}">selected="selected"</c:if>>
+			            ${item.category}
 			          </option>
 			        </c:forEach> 
 		         </select>
@@ -327,14 +327,14 @@
 	      <tbody id="tbody">
 	        <c:forEach items="${list}" var="item">
 		        <tr>
-		          <td ><input type="checkbox" name="id" value="${item.id}"></td>
-		          <td>${item.roomNumber}</td>
-		          <td>${item.roomGuestRoomLevelName}</td>
-		          <td>${item.roomStandardPrice}</td>
-		          <td>${item.roomStandardPriceDay}</td>
-		          <td>${item.rentOutTypeName}</td>
+		          <td ><input type="checkbox" name="id" value="${item.stayregisterdetailId}"></td>
+		          <td>${item.room.roomNumber}</td>
+		          <td>${item.room.guestRoomLevel.category}</td>
+		          <td>${item.room.standarPrice}</td>
+		          <td>${item.room.standarPriceDay}</td>
+		          <td>${item.rentOutType.category}</td>
 		          <td>${item.stayNumber}</td>
-		          <td>${item.registerTime}</td>
+		          <td>${item.stayRegisterTime}</td>
 		          <td>${item.sumConst}</td>
 		        </tr>
 	        </c:forEach>
@@ -392,14 +392,14 @@
                 var tdregisterTime = tr.insertCell(-1);
                 var tdsumConst = tr.insertCell(-1);
                 
-                trid.innerHTML = "<input type='checkbox' name='id' value='"+item.id+"'>";
-                tdroomNumber.innerHTML = item.roomNumber;
-                tdroomGuestRoomLevelName.innerHTML = item.roomGuestRoomLevelName;
-                tdroomStandardPriceDay.innerHTML =item.roomStandardPriceDay;         //中间这个是数据
-                tdroomStandardPrice.innerHTML =item.roomStandardPrice;
-                tdrentOutTypeName.innerHTML =item.rentOutTypeName;
+                trid.innerHTML = "<input type='checkbox' name='id' value='"+item.stayregisterdetailId+"'>";
+                tdroomNumber.innerHTML = item.room.roomNumber;
+                tdroomGuestRoomLevelName.innerHTML = item.room.guestRoomLevel.category;
+                tdroomStandardPriceDay.innerHTML =item.room.standarPriceDay;         //中间这个是数据
+                tdroomStandardPrice.innerHTML =item.room.standarPrice;
+                tdrentOutTypeName.innerHTML =item.rentOutType.category;
                 tdstayNumber.innerHTML =item.stayNumber;
-                tdregisterTime.innerHTML =new Date(item.registerTime).Format("yyyy-MM-dd hh:mm:ss");
+                tdregisterTime.innerHTML =item.stayRegisterTime;
                 tdsumConst.innerHTML =item.sumConst;
                 
             }
@@ -407,34 +407,34 @@
           error: function(data) {
            }
       });
-      $.ajax({                                                      
-          cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交
-          type: "POST",                                           //上面3行都是必须要的
-          url: '${ctx}/StayRegister/timeAjaxSelectRoomTwo.do',       //地址 type 带参数
-          data:"receiveTargetID="+receiveTargetID+"&datemin="+datemin+"&datemax="+datemax,
-          //        dataType:"json",                                       // json 数据类型提交 
-          async:false,                                          // 是否 异步 提交
-          success: function (item) {
-               var tr = tbodyOne.insertRow(-1);            // FireFox必须使用-1这个参数
-               
-               var tdstayMoney = tr.insertCell(-1);   // Table 有多少列就添加多少个这个
-               var tdchangRoomMoney = tr.insertCell(-1);
-               var tdotherMoney = tr.insertCell(-1);
-               var tdpayMoney = tr.insertCell(-1);
-               var tddepositMoney = tr.insertCell(-1);
-               var tdpayRepairMoney = tr.insertCell(-1);
-               
-               tdstayMoney.innerHTML = item.stayMoney;
-               tdchangRoomMoney.innerHTML = item.changRoomMoney;
-               tdotherMoney.innerHTML =item.otherMoney;         //中间这个是数据
-               tdpayMoney.innerHTML =item.payMoney;
-               tddepositMoney.innerHTML =item.depositMoney;
-               tdpayRepairMoney.innerHTML =item.payRepairMoney;
-               tdpayRepairMoney.style.color="red";
-                
-          },
-          error: function(data) {
-           }
+      <%--$.ajax({                                                      --%>
+          <%--cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交--%>
+          <%--type: "POST",                                           //上面3行都是必须要的--%>
+          <%--url: '${ctx}/StayRegister/timeAjaxSelectRoomTwo.do',       //地址 type 带参数--%>
+          <%--data:"receiveTargetID="+receiveTargetID+"&datemin="+datemin+"&datemax="+datemax,--%>
+          <%--//        dataType:"json",                                       // json 数据类型提交 --%>
+          <%--async:false,                                          // 是否 异步 提交--%>
+          <%--success: function (item) {--%>
+               <%--var tr = tbodyOne.insertRow(-1);            // FireFox必须使用-1这个参数--%>
+               <%----%>
+               <%--var tdstayMoney = tr.insertCell(-1);   // Table 有多少列就添加多少个这个--%>
+               <%--var tdchangRoomMoney = tr.insertCell(-1);--%>
+               <%--var tdotherMoney = tr.insertCell(-1);--%>
+               <%--var tdpayMoney = tr.insertCell(-1);--%>
+               <%--var tddepositMoney = tr.insertCell(-1);--%>
+               <%--var tdpayRepairMoney = tr.insertCell(-1);--%>
+               <%----%>
+               <%--tdstayMoney.innerHTML = item.stayMoney;--%>
+               <%--tdchangRoomMoney.innerHTML = item.changRoomMoney;--%>
+               <%--tdotherMoney.innerHTML =item.otherMoney;         //中间这个是数据--%>
+               <%--tdpayMoney.innerHTML =item.payMoney;--%>
+               <%--tddepositMoney.innerHTML =item.depositMoney;--%>
+               <%--tdpayRepairMoney.innerHTML =item.payRepairMoney;--%>
+               <%--tdpayRepairMoney.style.color="red";--%>
+                <%----%>
+          <%--},--%>
+          <%--error: function(data) {--%>
+           <%--}--%>
       });
       document.getElementById("labelId").innerHTML=i;
    }
@@ -497,7 +497,7 @@
          url: '${ctx}/StayRegister/timeAjaxSelectRoomThree.do',       //地址 type 带参数
          data:"id="+id+"&zhuSuFei="+zhuSuFei+"&huanFangFei="+huanFangFei+"&qiTaXiaoFei="+qiTaXiaoFei
             +"&jieZhangJinE="+jieZhangJinE+"&yaJin="+yaJin+"&yingBuJinE="+yingBuJinE,
-//                 dataType:"json",                                       // json 数据类型提交 
+		 dataType:"json",                                       // json 数据类型提交
          async:false,                                          // 是否 异步 提交
          success: function (item) {
                var tr = tbodyone.insertRow(-1);            // FireFox必须使用-1这个参数

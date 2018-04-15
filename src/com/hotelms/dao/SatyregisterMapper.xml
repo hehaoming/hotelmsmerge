@@ -379,6 +379,58 @@
     </update>
 
 
+    <update id="updateSatyRegisterWhenPay" parameterType="hashmap">
+        UPDATE stayregister SET  isBillId = 1,payTime = #{payTime}
+        <where>
+            stayregisterdetailId=#{id}
+        </where>
+    </update>
+
+    <select id="selectStayRegistersByTeamIdAndBillIdAndRoomId" parameterType="hashmap" resultMap="allStayRegisyerObject">
+        SELECT * FROM stayregister LEFT OUTER JOIN roomset ON stayregister.room=roomset.roomID
+        LEFT OUTER JOIN team ON stayregister.team=team.tuanduiID
+        LEFT OUTER JOIN passenger ON stayregister.passenger=passenger.id
+        <where>
+            <if test="isBillID == null or isBillID.length() == 0">
+                isBillId = 0
+            </if>
+            <if test="isBillID != null and isBillID.length() != 0">
+                isBillId = #{isBillID}
+            </if>
+            <if test="tuanduiID != null and tuanduiID.length() != 0">
+               AND team = #{tuanduiID}
+            </if>
+            <if test="txtname != null">
+               AND roomNumber LIKE #{txtname}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectNotBilledStayRegistersByTeamId" parameterType="int" resultMap="allStayRegisyerObject">
+        SELECT * FROM stayregister LEFT OUTER JOIN roomset ON stayregister.room=roomset.roomID
+        LEFT OUTER JOIN team ON stayregister.team=team.tuanduiID
+        LEFT OUTER JOIN passenger ON stayregister.passenger=passenger.id
+        <where>
+            isBillId = 0 AND team = #{tuanDuiID}
+        </where>
+    </select>
+
+    <select id="selectUnBilledRegistersByDateAndId" parameterType="hashmap" resultMap="allStayRegisyerObject">
+        SELECT * FROM stayregister LEFT OUTER JOIN roomset ON stayregister.room=roomset.roomID
+        LEFT OUTER JOIN team ON stayregister.team=team.tuanduiID
+        LEFT OUTER JOIN passenger ON stayregister.passenger=passenger.id
+        <where>
+            isBillId = 0 AND team = #{teamID}
+            <if test="datemin != null and datemin.length() != 0">
+                AND stayRegisterTime >= #{datemin}
+            </if>
+            <if test="datemax != null and datemax.length() != 0">
+                AND stayRegisterTime &lt;= #{datemax}
+            </if>
+        </where>
+    </select>
+
+
     <update id="addDeposit" parameterType="hashmap">
         UPDATE stayregister SET deposit=deposit+#{deposit},depositPayWayId=#{depositPayWayId} WHERE stayregisterdetailId=#{stayregisterdetailId}
     </update>
