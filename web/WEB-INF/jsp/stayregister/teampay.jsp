@@ -435,7 +435,7 @@
           <%--},--%>
           <%--error: function(data) {--%>
            <%--}--%>
-      });
+      // });
       document.getElementById("labelId").innerHTML=i;
    }
    
@@ -497,7 +497,7 @@
          url: '${ctx}/StayRegister/timeAjaxSelectRoomThree.do',       //地址 type 带参数
          data:"id="+id+"&zhuSuFei="+zhuSuFei+"&huanFangFei="+huanFangFei+"&qiTaXiaoFei="+qiTaXiaoFei
             +"&jieZhangJinE="+jieZhangJinE+"&yaJin="+yaJin+"&yingBuJinE="+yingBuJinE,
-		 dataType:"json",                                       // json 数据类型提交
+		 // dataType:"json",                                       // json 数据类型提交
          async:false,                                          // 是否 异步 提交
          success: function (item) {
                var tr = tbodyone.insertRow(-1);            // FireFox必须使用-1这个参数
