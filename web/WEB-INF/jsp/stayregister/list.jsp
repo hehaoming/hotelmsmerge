@@ -669,7 +669,7 @@
             lvKeName = table.rows[selectedIndex - 1].cells[5].innerHTML;
             TOF = table.rows[selectedIndex - 1].cells[12].innerHTML;
         });
-        if (TOF == 69) {
+        if (TOF == 1) {
             alert("很抱歉！该数据已经结账没法进行此操作！");
             return;
         }
@@ -702,7 +702,7 @@
     function teampayfunction() {
         var tuanDuiID = document.getElementById("tuanDuiId").value;
         var teamIsBillId = document.getElementById("teamIsBillId").value;
-        if (teamIsBillId == 69) {
+        if (teamIsBillId == 1) {
             alert("很抱歉！该状态为已结账没法进行此操作！");
             return;
         }
