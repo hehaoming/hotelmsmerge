@@ -15,6 +15,16 @@ public class Consumption {
 
     private String consumptionTime;
 
+    private Integer saleprice;
+
+    public Integer getSaleprice() {
+        return saleprice;
+    }
+
+    public void setSaleprice(Integer saleprice) {
+        this.saleprice = saleprice;
+    }
+
     public Consumption() {
     }
 
@@ -73,4 +83,6 @@ public class Consumption {
     public void setConsumptionTime(String consumptionTime) {
         this.consumptionTime = consumptionTime;
     }
+
+
 }

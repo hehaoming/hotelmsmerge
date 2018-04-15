@@ -85,6 +85,10 @@ public interface CommodityMapper {
      * @param typeID 商品种类的id
      * @return 商品总数
      */
+//    from 陈志雄  待修改
+    int getsalePrice(String commodityName);
+
+
     public int selectCommodityTotalNumberByType(String typeID);
 
     /**
@@ -116,4 +120,8 @@ public interface CommodityMapper {
      * @param map
      */
     List<Commodity> findLimitCommoditysByLikeType(Map<String, Object> map);
+
+    List<CommodityVO> findCommoditysByType(String name);
+
+    List<CommodityVO> findCommoditysByLikeType(HashMap hashMap);
 }

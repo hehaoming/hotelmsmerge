@@ -208,8 +208,5 @@ public class StayregisterController {
         model.addAttribute("listTwo",ItemUtils.getListOfItem(9));
         return "/WEB-INF/jsp/stayregister/deposit.jsp";
     }
-    @RequestMapping("/toshiftteam")
-    public String toshiftteam(){
 
-    }
 }

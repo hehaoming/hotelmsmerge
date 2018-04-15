@@ -49,6 +49,10 @@
       SELECT * FROM commodity WHERE commodityName=#{commodityName}
     </select>
 
+    <select id="getsalePrice" parameterType="string" resultType="int">
+        select saleprice from commodity WHERE commodityName=#{commodityName};
+    </select>
+
     <select id="findCommodityTypeName" parameterType="integer" resultType="commodityvo">
         SELECT category FROM itemdetails WHERE itemdetailsID=#{itemdetailsID}
     </select>
@@ -58,7 +62,6 @@
        SELECT * FROM commodity WHERE commodityTypeID=#{typeID} limit #{limit} offset #{offset}
     </select>
 
-
     <select id="selectCommodityTotalNumberByType" parameterType="string" resultType="int">
         SELECT count(*) FROM commodity WHERE commodityTypeID=#{commodityTypeID}
     </select>
@@ -66,4 +69,30 @@
     <select id="findLimitCommoditysByLikeType" parameterType="hashmap" resultType="commodity">
         SELECT * FROM commodity WHERE commodityTypeID=#{typeID} AND commodityName LIKE #{name} limit #{limit} offset #{offset}
     </select>
+
+    <resultMap id="baseMap" type="com.hotelms.bean.CommodityVO">
+        <id column="commodityID" jdbcType="INTEGER" property="commodityID" />
+        <result column="commodityName" jdbcType="VARCHAR" property="commodityName" />
+        <result column="commodityTypeID" jdbcType="INTEGER" property="commodityTypeID" />
+        <association property="commodityType" javaType="string"
+                     select="com.hotelms.dao.ItemMapper.getOneNameOfItem"
+                     column="commodityTypeID">
+            <result column="category" property="commodityType"/>
+        </association>
+        <association property="uOM" javaType="string"
+                     select="com.hotelms.dao.ItemMapper.getOneNameOfItem"
+                     column="uOMID">
+            <result column="category" property="uOM"/>
+        </association>
+    </resultMap>
+   <!--from 陈志雄-->
+    <select id="findCommoditysByLikeType" parameterType="hashmap" resultMap="baseMap">
+        SELECT * FROM commodity WHERE commodityTypeID=#{typeID} AND commodityName LIKE #{name} ;
+    </select>
+
+    <!--from 陈志雄-->
+    <select id="findCommoditysByType" resultMap="baseMap" parameterType="string">
+        SELECT * FROM commodity WHERE commodityTypeID=#{typeID};
+    </select>
+
 </mapper>
