@@ -390,6 +390,7 @@
             <if test="isBillID != null and isBillID.length() != 0">
                 isBillId = #{isBillID}
             </if>
+               AND team IS NOT NULL
             <if test="tuanduiID != null and tuanduiID.length() != 0">
                AND team = #{tuanduiID}
             </if>
