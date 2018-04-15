@@ -301,7 +301,12 @@
                             <c:if test="${!empty item.team}">
                                 <td style="width:12%;">${item.team.teamName}</td>
                             </c:if>
-                            <td>${item.passenger.name}</td>
+                            <c:if test="${empty item.team}">
+                                <td>${item.passenger.name}</td>
+                            </c:if>
+                            <c:if test="${!empty item.team}">
+                                <td style="width:12%;">${item.team.principal}</td>
+                            </c:if>
                             <td>${item.passengerType.category}</td>
                             <td>${item.changingRoomNumber}</td>
                             <td>${item.changingRoomMoney}</td>
@@ -324,7 +329,12 @@
                             <c:if test="${!empty item.team}">
                                 <td style="width:12%;">${item.team.teamName}</td>
                             </c:if>
-                            <td>${item.passenger.name}</td>
+                            <c:if test="${empty item.team}">
+                                <td>${item.passenger.name}</td>
+                            </c:if>
+                            <c:if test="${!empty item.team}">
+                                <td style="width:12%;">${item.team.principal}</td>
+                            </c:if>
                             <td>${item.passengerType.category}</td>
                             <td>${item.changingRoomNumber}</td>
                             <td>${item.changingRoomMoney}</td>
