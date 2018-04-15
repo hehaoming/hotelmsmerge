@@ -314,6 +314,7 @@ public class StayregisterController {
         model.addAttribute("principalId",principalId);
         model.addAttribute("contactPhoneNUmberId",contactPhoneNUmberId);
         model.addAttribute("registerTimeId",registerTimeId);
+        model.addAttribute("isBillID",isBillID);
         int sumMoney = satyregisterService.getTotalMoney(listBean.getResult());
         model.addAttribute("teamSumConst",sumMoney);
         return "/WEB-INF/jsp/stayregister/list.jsp";

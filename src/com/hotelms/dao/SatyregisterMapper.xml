@@ -377,7 +377,7 @@
                AND team = #{tuanduiID}
             </if>
             <if test="txtname != null">
-               AND room = #{txtname}
+               AND roomNumber LIKE #{txtname}
             </if>
         </where>
     </select>
