@@ -3,14 +3,23 @@
 <mapper namespace="com.hotelms.dao.ReceiveTargetMapper">
 
 
-    <insert id="addReceiveTarget" parameterType="receiveTargetBean">
-        INSERT INTO team (rt_id,targetTypeID,principal,teamName,teamCode,registerTime,contactPhoneNUmber)
+
+    <!--添加之后返回主键；-->
+    <insert id="addReceiveTarget" parameterType="receiveTargetBean" useGeneratedKeys="true" keyProperty="rt_id">
+        INSERT INTO receivetarget (rt_id,targetTypeID,principal,teamName,teamCode,registerTime,contactPhoneNUmber)
         VALUES (NULL,#{targetTypeID},#{principal},#{teamName},#{teamCode},#{registerTime},#{contactPhoneNUmber});
     </insert>
 
-    <delete id="deleteReceiveTargetByID" parameterType="string">
-        delete from team where rt_id in ${rt_id}
+    <insert id="addReceiveTargetAnother" parameterType="receiveTargetBean">
+        INSERT INTO team
+        (tuanduiID,targetTypeID,principal,teamName,teamCode,registerTime,contactPhoneNUmber)
+        VALUES (#{rt_id},#{targetTypeID},#{principal},#{teamName},#{teamCode},#{registerTime},#{contactPhoneNUmber});
+    </insert>
 
+
+
+    <delete id="deleteReceiveTargetByID" parameterType="string">
+        delete from receivetarget where rt_id in ${rt_id};
 
         <!--#{}  注入会加''
                  ${}注入不加'',光棍进来
@@ -26,9 +35,17 @@
         <!--</foreach>-->
 
     </delete>
+
+
+    <delete id="deleteReceiveTargetByIDAnother" parameterType="string">
+        DELETE FROM team WHERE tuanduiID = ${rt_id};
+    </delete>
+
+
+
     <update id="updateReceiveTarget" parameterType="receiveTargetBean">
 
-        update  team
+        update  receivetarget
         set targetTypeID =#{targetTypeID},
         principal=#{principal},
         teamName=#{teamName},
@@ -38,20 +55,31 @@
         where rt_id = #{rt_id}
     </update>
 
+    <update id="updateReceiveTargetAnother" parameterType="receiveTargetBean">
+        update  team
+        set targetTypeID =#{targetTypeID},
+        principal=#{principal},
+        teamName=#{teamName},
+        teamCode=#{teamCode},
+        registerTime=#{registerTime},
+        contactPhoneNUmber=#{contactPhoneNUmber}
+        where tuanduiID = #{rt_id}
+    </update>
+
 
     <select id="findReceiveTargetByID" parameterType="int" resultType="receiveTargetBean">
-        SELECT * FROM team
+        SELECT * FROM receivetarget
         WHERE rt_id = #{rt_id,jdbcType=INTEGER}
     </select>
 
     <select id="findReceiveTargetByName" parameterType="string" resultType="receiveTargetBean">
         <!--<bind name="pattern" value="'%' + #{teamName} + '%'" />-->
-        SELECT * FROM team
+        SELECT * FROM receivetarget
         WHERE teamName LIKE CONCAT('%',#{teamName},'%')
     </select>
 
     <select id="findAllReceiveTarget" resultType="receiveTargetBean">
-        SELECT * FROM team
+        SELECT * FROM receivetarget
     </select>
 
     <!--<select id="findReceiveTargetByLimit" parameterType="int" resultType="receiveTargetBean">-->

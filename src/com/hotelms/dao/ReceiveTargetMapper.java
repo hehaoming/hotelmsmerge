@@ -9,9 +9,16 @@ public interface ReceiveTargetMapper {
 
     int addReceiveTarget(ReceiveTargetBean receiveTargetBean);
 
+    int addReceiveTargetAnother(ReceiveTargetBean receiveTargetBean);
+
     int deleteReceiveTargetByID(@Param(value = "rt_id") String rt_id);
 
+    int deleteReceiveTargetByIDAnother(@Param(value = "rt_id") String rt_id);
+
+
     int updateReceiveTarget(ReceiveTargetBean receiveTargetBean);
+
+    int updateReceiveTargetAnother(ReceiveTargetBean receiveTargetBean);
 
     ReceiveTargetBean findReceiveTargetByID(int rt_id);
 

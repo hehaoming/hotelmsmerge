@@ -44,6 +44,10 @@ public interface SatyregisterMapper {
 
     void changeStayRegisterRoom(HashMap<String, String> stringStringHashMap);
 
+    void addDeposit(HashMap<String, Integer> stringStringHashMap);
+
+    void updateStayRegisterTeam(HashMap<String, Integer> stringStringHashMap);
+
     /**
      * 改变订单状态为已结账，增加结账时间，结账方式
      * @param map 结账时间，结账方式，订单id

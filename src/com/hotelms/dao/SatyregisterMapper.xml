@@ -405,4 +405,13 @@
             </if>
         </where>
     </select>
+
+
+    <update id="addDeposit" parameterType="hashmap">
+        UPDATE stayregister SET deposit=deposit+#{deposit},depositPayWayId=#{depositPayWayId} WHERE stayregisterdetailId=#{stayregisterdetailId}
+    </update>
+
+    <update id="updateStayRegisterTeam" parameterType="hashmap">
+        UPDATE stayregister SET team=#{team} WHERE stayregisterdetailId=#{stayregisterdetailId}
+    </update>
 </mapper>

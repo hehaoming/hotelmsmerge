@@ -119,12 +119,14 @@
                         </div>
                     </form>
                     <select id="isBillID" style="width:10%;height:27px; float:left;" onchange="selectChange()">
-                        <c:forEach items="${listOne}" var="item">
-                            <option value="${item.far_id}"
-                                    <c:if test="${item.far_id==isBillID}">selected="selected"</c:if>>
-                                    ${item.attributeDetailsName}
-                            </option>
-                        </c:forEach>
+                        <option value="1"
+                                <c:if test="${isBillID==1}">selected="selected"</c:if>>
+                            已结账
+                        </option>
+                        <option value="2"
+                                <c:if test="${isBillID==0}">selected="selected"</c:if>>
+                            未结账
+                        </option>
                     </select>
                     <div class="span1" style="margin-right: 4px;">
                         <button class="btn btn-info btn-small" type="button" onclick="registerfunction()">
@@ -213,12 +215,14 @@
                             </form>
                             <select id="teamIsBillId" style="width:8%;height:27px; float:left; margin-right:5px;"
                                     onchange="teamSelect()">
-                                <c:forEach items="${listOne}" var="item">
-                                    <option value="${item.far_id}"
-                                            <c:if test="${item.far_id==isBillID}">selected="selected"</c:if>>
-                                            ${item.attributeDetailsName}
+                                    <option value="1"
+                                            <c:if test="${isBillID==1}">selected="selected"</c:if>>
+                                            已结账
                                     </option>
-                                </c:forEach>
+                                <option value="2"
+                                        <c:if test="${isBillID==0}">selected="selected"</c:if>>
+                                    未结账
+                                </option>
                             </select>
                             <a href="#duixiang" data-toggle="modal" class="btn btn-info btn-small"
                                onclick="selectTarget()">

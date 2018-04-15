@@ -130,4 +130,6 @@ public interface SatyregisterService {
      * @return 订单集合
      */
     public List<StayRegisterBean> findSomeUnBilledRegistersByDateAndId(String receiveTargetID, String datemin, String datemax);
+
+    void updateStayRegisterTeam(int id, Integer receiveTargetID);
 }

@@ -148,11 +148,19 @@ public class SatyregisterServiceImpl implements SatyregisterService {
     @Override
     public void addDeposit(int depositPayWayID, int stayregisterdetailId, int deposit) {
         HashMap<String, Integer> stringStringHashMap = new HashMap<>();
-        stringStringHashMap.put("stayregisterdetailId",stayregisterdetailId);
-        stringStringHashMap.put("depositPayWayId",depositPayWayID);
-        stringStringHashMap.put("deposit",deposit);
-/*        satyregisterMapper.addDeposit(stringStringHashMap);*/
+        stringStringHashMap.put("stayregisterdetailId", stayregisterdetailId);
+        stringStringHashMap.put("depositPayWayId", depositPayWayID);
+        stringStringHashMap.put("deposit", deposit);
+        satyregisterMapper.addDeposit(stringStringHashMap);
 
+    }
+
+    @Override
+    public void updateStayRegisterTeam(int id, Integer receiveTargetID) {
+        HashMap<String, Integer> stringStringHashMap = new HashMap<>();
+        stringStringHashMap.put("stayregisterdetailId", id);
+        stringStringHashMap.put("team", receiveTargetID);
+        satyregisterMapper.updateStayRegisterTeam(stringStringHashMap);
     }
 
     @Autowired
