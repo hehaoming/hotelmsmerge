@@ -38,6 +38,7 @@ public class StayregisterController {
         listBean.setResult(allStayRegisyerObject);
         model.addAttribute("LvKeLeiXingId",targetType);
         model.addAttribute("isBillID",0);
+        model.addAttribute("list",listBean);
         return "/WEB-INF/jsp/stayregister/list.jsp";
     }
 
