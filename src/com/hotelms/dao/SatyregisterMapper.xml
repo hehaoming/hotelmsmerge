@@ -264,19 +264,12 @@
     </resultMap>
 
 
-    <select id="getAllPassengerObject" parameterType="hashmap" resultMap="allStayRegisyerObject">
-        SELECT * FROM stayregister LEFT OUTER JOIN roomset ON stayregister.room=roomset.roomID
-        LEFT OUTER JOIN team ON stayregister.team=team.tuanduiID
-        LEFT OUTER JOIN passenger ON stayregister.passenger=passenger.id
+    <select id="getAllPassengerObject" parameterType="hashmap" resultMap="allPassengerObject">
+        select * from passenger
         <where>
-            <choose>
-                <when test="targetType == 72">
-                    team IS NULL
-                </when>
-                <otherwise>
-                    team IS NOT NULL
-                </otherwise>
-            </choose>
+            <if test="txtname != null and txtname != ''">
+                name LIKE '%${txtname}%'
+            </if>
         </where>
     </select>
 

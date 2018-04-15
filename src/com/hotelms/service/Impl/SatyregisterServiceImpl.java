@@ -168,8 +168,6 @@ public class SatyregisterServiceImpl implements SatyregisterService {
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("targetType",lvKeLeiXingId);
         hashMap.put("isBillID",isBillID);
-        System.out.println(isBillID);
-        System.out.println(lvKeLeiXingId);
         return satyregisterMapper.getIsBillStayRegisyerObject(hashMap);
     }
 
