@@ -561,7 +561,7 @@
             selectedIndex = this.parentNode.parentNode.rowIndex;
             lvKeName = table.rows[selectedIndex - 1].cells[5].innerHTML;
         });
-        if (chk_value != "") {
+        if (chk_value !== "") {
             if (chk_value.toString().indexOf(",") > 0) {
                 alert("只能选择一个房间查看押金记录哦");
             } else {
@@ -640,11 +640,11 @@
             roomNumber = table.rows[selectedIndex - 1].cells[1].innerHTML;
             TOF = table.rows[selectedIndex - 1].cells[12].innerHTML;
         });
-        if (chk_value != "") {
+        if (chk_value !== "") {
             if (chk_value.toString().indexOf(",") > 0) {
                 alert("只能选择一个房间添加消费哦");
             } else {
-                if (lvKeName == "") {
+                if (lvKeName === "") {
                     alert("请先登记");
                 } else {
                     parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/toconsumption.do?id=' +
