@@ -168,8 +168,8 @@
       </div>
     </div>
     <form  method="post" onsubmit="return verify()">
-    <input type="hidden" id="stayId" value="${stayId}">         <!-- 住宿ID -->
-    <input type="hidden" id="roomId" value="${listDeposit[0].roomID}">         <!-- 住宿ID -->
+    <input type="hidden" id="stayId" value="${stayRegisterBean.stayregisterdetailId}">         <!-- 订单ID -->
+    <input type="hidden" id="roomId" value="${stayRegisterBean.room.roomID}">         <!-- 房间ID -->
     <div class="span6" style="text-align:center;">
 		      <div class="row-fluid">
 			      <div class="span12" style="margin-top: 10px;margin-bottom: 8px;">
@@ -195,15 +195,15 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">房间号：</label>
-		        <label class="yangse">${listDeposit[0].roomNumber}</label>
+		        <label class="yangse">${stayRegisterBean.room.roomNumber}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">旅客姓名：</label>
-		        <label class="yangse">${lvKeName}</label>
+		        <label class="yangse">${stayRegisterBean.passenger.name}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">接待对象：</label>
-		        <label class="yangse">${listDeposit[0].receiveTargeTypeName}</label>
+		        <label class="yangse">散客</label>
 		     </div>
 		  </div>
 	    </div>
@@ -212,18 +212,18 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">出租方式：</label>
-		        <label class="yangse">${listDeposit[0].rentOutTypeName}</label>
+		        <label class="yangse">${stayRegisterBean.rentOutType.category}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">结账单位：</label>
-		        <label class="yangse">${listDeposit[0].billUnitName}</label>
+		        <label class="yangse">${stayRegisterBean.billUnit.category}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">结账方式：</label>
 		         <select id="payWayId" class="yangse" style="width:70%;height:27px;">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==21}">selected="selected"</c:if>>
-			            ${item.attributeDetailsName}
+			          <option value="${item.itemDetailsID}" <c:if test="${item.itemDetailsID==69}">selected="selected"</c:if>>
+			            ${item.category}
 			          </option>
 			        </c:forEach> 
 		          </select>
@@ -235,7 +235,7 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">登记时间：</label>
-		        <label class="yangse">${listDeposit[0].registerTime}</label>
+		        <label class="yangse">${stayRegisterBean.stayRegisterTime}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">结账时间：</label>
@@ -243,7 +243,7 @@
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">天数或钟点：</label>
-		        <label class="yangse">${listDeposit[0].stayNumber}</label>
+		        <label class="yangse">${stayRegisterBean.stayNumber}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -252,15 +252,15 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">房价/天：</label>
-		        <label class="yangse">${listShangPin[0].roomStandardPriceDay}</label>
+		        <label class="yangse">${stayRegisterBean.room.standarPriceDay}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">房价/小时：</label>
-		        <label class="yangse">${listShangPin[0].roomStandardPrice}</label>
+		        <label class="yangse">${stayRegisterBean.room.standarPrice}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">首段价格：</label>
-		        <label class="yangse">${listShangPin[0].roomFirstPrice}</label>
+		        <label class="yangse">${stayRegisterBean.room.firstPrice}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -273,11 +273,11 @@
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">换房次数：</label>
-		        <label class="yangse">${listShangPin[0].changingRoomNumber}</label>
+		        <label class="yangse">${stayRegisterBean.changingRoomNumber}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">换房费：</label>
-		        <label class="yangse">${listShangPin[0].changRoomMoney}</label>
+		        <label class="yangse">${stayRegisterBean.changingRoomMoney}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -290,11 +290,11 @@
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">结账金额：</label>
-		        <label class="yangse">${listShangPin[0].sumConst}</label>
+		        <label class="yangse">${stayRegisterBean.sumConst}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">押金：</label>
-		        <label class="yangse">${yaJin}</label>
+		        <label class="yangse">${stayRegisterBean.deposit}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -307,7 +307,7 @@
 	    <div class="span12">
 	      <label style="float: left;">备注：　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</label>
 	      <label style="float: left;">应补缴金额：</label><label style="color:red;">${yingBuJinE}</label>
-	      <input id="remarksId" class="yangse" type="text" style="width:100%;height:25px;"> 
+	      <input id="remarksId" class="yangse" type="text" style="width:100%;height:25px;" value="${yingBuJinE}">
 	    </div>
 	    
 	

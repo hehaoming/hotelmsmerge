@@ -66,7 +66,11 @@ public class FinancialStatisticsServiceImpl implements FinancialStatisticsServic
             stayRegister.setRoomNumber(String.valueOf(roomset.getRoomNumber()));
             if(stayRegister.getTeam() == null || stayRegister.getTeam() == 0) {
                 stayRegister.setReceptionName("散客");
-                stayRegister.setPersonName(passengerMapper.selectPassengerByID(stayRegister.getPassenger()).getName());
+                if(stayRegister.getPassenger() != null && stayRegister.getPassenger() != 0) {
+                    stayRegister.setPersonName(passengerMapper.selectPassengerByID(stayRegister.getPassenger()).getName());
+                }else {
+                    stayRegister.setPersonName("");
+                }
             }else {
                 Team team = teamMapper.selectTeamByID(stayRegister.getTeam());
                 stayRegister.setReceptionName(team.getTeamName());

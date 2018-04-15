@@ -119,12 +119,14 @@
                         </div>
                     </form>
                     <select id="isBillID" style="width:10%;height:27px; float:left;" onchange="selectChange()">
-                        <c:forEach items="${listOne}" var="item">
-                            <option value="${item.far_id}"
-                                    <c:if test="${item.far_id==isBillID}">selected="selected"</c:if>>
-                                    ${item.attributeDetailsName}
-                            </option>
-                        </c:forEach>
+                        <option value="1"
+                                <c:if test="${isBillID==1}">selected="selected"</c:if>>
+                            已结账
+                        </option>
+                        <option value="0"
+                                <c:if test="${isBillID==0}">selected="selected"</c:if>>
+                            未结账
+                        </option>
                     </select>
                     <div class="span1" style="margin-right: 4px;">
                         <button class="btn btn-info btn-small" type="button" onclick="registerfunction()">
@@ -213,12 +215,14 @@
                             </form>
                             <select id="teamIsBillId" style="width:8%;height:27px; float:left; margin-right:5px;"
                                     onchange="teamSelect()">
-                                <c:forEach items="${listOne}" var="item">
-                                    <option value="${item.far_id}"
-                                            <c:if test="${item.far_id==isBillID}">selected="selected"</c:if>>
-                                            ${item.attributeDetailsName}
+                                    <option value="1"
+                                            <c:if test="${isBillID==1}">selected="selected"</c:if>>
+                                            已结账
                                     </option>
-                                </c:forEach>
+                                <option value="0"
+                                        <c:if test="${isBillID==0}">selected="selected"</c:if>>
+                                    未结账
+                                </option>
                             </select>
                             <a href="#duixiang" data-toggle="modal" class="btn btn-info btn-small"
                                onclick="selectTarget()">
@@ -297,7 +301,12 @@
                             <c:if test="${!empty item.team}">
                                 <td style="width:12%;">${item.team.teamName}</td>
                             </c:if>
-                            <td>${item.passenger.name}</td>
+                            <c:if test="${empty item.team}">
+                                <td>${item.passenger.name}</td>
+                            </c:if>
+                            <c:if test="${!empty item.team}">
+                                <td style="width:12%;">${item.team.principal}</td>
+                            </c:if>
                             <td>${item.passengerType.category}</td>
                             <td>${item.changingRoomNumber}</td>
                             <td>${item.changingRoomMoney}</td>
@@ -320,7 +329,12 @@
                             <c:if test="${!empty item.team}">
                                 <td style="width:12%;">${item.team.teamName}</td>
                             </c:if>
-                            <td>${item.passenger.name}</td>
+                            <c:if test="${empty item.team}">
+                                <td>${item.passenger.name}</td>
+                            </c:if>
+                            <c:if test="${!empty item.team}">
+                                <td style="width:12%;">${item.team.principal}</td>
+                            </c:if>
                             <td>${item.passengerType.category}</td>
                             <td>${item.changingRoomNumber}</td>
                             <td>${item.changingRoomMoney}</td>
@@ -547,7 +561,7 @@
             selectedIndex = this.parentNode.parentNode.rowIndex;
             lvKeName = table.rows[selectedIndex - 1].cells[5].innerHTML;
         });
-        if (chk_value != "") {
+        if (chk_value !== "") {
             if (chk_value.toString().indexOf(",") > 0) {
                 alert("只能选择一个房间查看押金记录哦");
             } else {
@@ -626,11 +640,11 @@
             roomNumber = table.rows[selectedIndex - 1].cells[1].innerHTML;
             TOF = table.rows[selectedIndex - 1].cells[12].innerHTML;
         });
-        if (chk_value != "") {
+        if (chk_value !== "") {
             if (chk_value.toString().indexOf(",") > 0) {
                 alert("只能选择一个房间添加消费哦");
             } else {
-                if (lvKeName == "") {
+                if (lvKeName === "") {
                     alert("请先登记");
                 } else {
                     parent.document.getElementById('Mainid').src = '${ctx}/StayRegister/toconsumption.do?id=' +
@@ -655,7 +669,7 @@
             lvKeName = table.rows[selectedIndex - 1].cells[5].innerHTML;
             TOF = table.rows[selectedIndex - 1].cells[12].innerHTML;
         });
-        if (TOF == 69) {
+        if (TOF == 1) {
             alert("很抱歉！该数据已经结账没法进行此操作！");
             return;
         }
@@ -688,7 +702,7 @@
     function teampayfunction() {
         var tuanDuiID = document.getElementById("tuanDuiId").value;
         var teamIsBillId = document.getElementById("teamIsBillId").value;
-        if (teamIsBillId == 69) {
+        if (teamIsBillId == 1) {
             alert("很抱歉！该状态为已结账没法进行此操作！");
             return;
         }
@@ -795,7 +809,7 @@
 
     function selectChange() {
         var isBillID = document.getElementById("isBillID").value;
-        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/tolist.do?isBillID=' + isBillID +
+        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/toIsBiilList.do?isBillID=' + isBillID +
             '&LvKeLeiXingId=' + 72;
     }
 
@@ -817,7 +831,7 @@
         var principalId = document.getElementById("principalId").value;
         var contactPhoneNUmberId = document.getElementById("contactPhoneNUmberId").value;
         var registerTimeId = document.getElementById("registerTimeId").value;
-        parent.document.getElementById("Mainid").src = '${ctx}/toteamlist.do?LvKeLeiXingId=' + 73 +
+        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/toteamlist.do?LvKeLeiXingId=' + 73 +
             '&isBillID=' + isBillID + "&txtname=" + txtname + "&tuanDuiID=" + tuanDuiID + "&teamNameId=" + teamNameId
             + "&teamCodeId=" + teamCodeId + "&principalId=" + principalId +
             "&contactPhoneNUmberId=" + contactPhoneNUmberId + "&registerTimeId=" + registerTimeId;
@@ -903,7 +917,7 @@
 
         var isBillID = document.getElementById("teamIsBillId").value;
         var tuanDuiID = document.getElementById("tuanDuiId").value;
-    /*    teamSelect();*/
+        teamSelect();
     }
 
 

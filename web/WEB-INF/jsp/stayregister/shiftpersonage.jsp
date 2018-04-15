@@ -163,7 +163,7 @@
   <body > 
   <div class="container" style="height:630px;overflow-x:auto;">
     <input type="hidden" id="id" value="${id}"/>
-    <input type="hidden" id="isBillID" value="${list.isBillID}"/>
+    <input type="hidden" id="isBillID" value="${item.isBillId}"/>
     <div class="span11" style=" border: solid; border-color: #DDDDDD;">
     <div class="span9 margin-top-one">
       <div class="row-fluid">
@@ -198,15 +198,20 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">房间号：</label>
-		        <label class="yanseblue">${list.roomNumber}</label>
+		        <label class="yanseblue">${item.room.roomNumber}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">接待对象：</label> <!-- 散客 -->
-		        <label class="yanseblue">${list.receiveTeamName==""?"散客":list.receiveTeamName}</label>
+		        <label class="yanseblue"><c:if test="${empty item.team}">
+					散客
+				</c:if>
+					<c:if test="${!empty item.team}">
+						${item.team.teamName}
+					</c:if></label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">旅客姓名：</label>
-		        <label class="yanseblue">${list.passengerName}</label>
+		        <label class="yanseblue">${item.passenger.name}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -215,15 +220,15 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">旅客类别：</label>
-		        <label class="yanseblue">${list.passengerTypeName}</label>
+		        <label class="yanseblue">${item.passengerType.category}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">旅客级别：</label>
-		        <label class="yanseblue">${list.passengerLevelName}</label>
+		        <label class="yanseblue">${item.passengerType.category}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">结账单位：</label>
-		        <label class="yanseblue">${list.billUnitName}</label>
+		        <label class="yanseblue">${item.billUnit.category}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -232,15 +237,15 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">结账方式：</label>
-		        <label class="yanseblue">${list.payWayName}</label>
+		        <label class="yanseblue">${item.depositPayWay.category}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">登记时间：</label>
-		        <label class="yanseblue">${list.registerTime}</label>
+		        <label class="yanseblue">${item.stayRegisterTime}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">出租方式：</label>
-		        <label class="yanseblue">${list.rentOutTypeName}</label>
+		        <label class="yanseblue">${item.rentOutType.category}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -249,15 +254,15 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">房价/天：</label>
-		        <label class="yanseblue">${list.roomStandardPriceDay}</label>
+		        <label class="yanseblue">${item.room.standarPriceDay}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">房价/小时：</label>
-		        <label class="yanseblue">${list.roomStandardPrice}</label>
+		        <label class="yanseblue">${item.room.standarPrice}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">首段价格：</label>
-		        <label class="yanseblue">${list.roomFirstPrice}</label>
+		        <label class="yanseblue">${item.room.firstPrice}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -266,15 +271,15 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">天数或钟点数：</label>
-		        <label class="yanseblue">${list.stayNumber}</label>
+		        <label class="yanseblue">${item.stayNumber}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">住宿费：</label>
-		        <label class="yanseblue">${zhuSuFei}</label>
+		        <label class="yanseblue">${item.sumConst}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">换房费：</label>
-		        <label class="yanseblue">${list.changRoomMoney}</label>
+		        <label class="yanseblue">${item.changingRoomMoney}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -287,11 +292,11 @@
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">旅客押金：</label>
-		        <label class="yanseblue">${yaJin}</label>
+		        <label class="yanseblue">${item.deposit}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">总费用：</label>
-		        <label class="yansered">${list.sumConst}</label>
+		        <label class="yansered">${item.sumConst}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -311,14 +316,14 @@
    function changOver(){
      var id=document.getElementById("id").value;
      var isBillID=document.getElementById("isBillID").value;
-     if(isBillID==69){
+     if(isBillID==1){
        alert("很抱歉！该数据已经结账没法进行操作！");
        return;
      }
      var flag=window.confirm("您确定要将此房间转为散客吗？这样会此房间的押金会脱离团队押金的哦！");
      if(flag){
 	     parent.document.getElementById('Mainid').src='${ctx}/StayRegister/changOver.do?id='+id+
-	     '&LvKeLeiXingId='+56;
+	     '&LvKeLeiXingId='+72;
      }
    }
  </script>

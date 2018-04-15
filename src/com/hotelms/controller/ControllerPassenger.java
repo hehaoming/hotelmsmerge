@@ -57,7 +57,6 @@ public class ControllerPassenger {
         if(currentage==null||currentage==""){
            currentage="1";
         }
-
         if (name==""||name==null) {
 
             List<PassengerVO> passengers = passengerService.selectAllPassenger(Integer.valueOf(currentage),2);
@@ -65,7 +64,6 @@ public class ControllerPassenger {
                 System.out.println(passenger);
             }
             list.setResult(passengers);
-
         }else {
             List<PassengerVO> passengers = passengerService.selectPassengerByName(name,Integer.valueOf(currentage),2);
             list.setResult(passengers);
