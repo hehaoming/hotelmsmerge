@@ -817,7 +817,7 @@
         var principalId = document.getElementById("principalId").value;
         var contactPhoneNUmberId = document.getElementById("contactPhoneNUmberId").value;
         var registerTimeId = document.getElementById("registerTimeId").value;
-        parent.document.getElementById("Mainid").src = '${ctx}/toteamlist.do?LvKeLeiXingId=' + 73 +
+        parent.document.getElementById("Mainid").src = '${ctx}/StayRegister/toteamlist.do?LvKeLeiXingId=' + 73 +
             '&isBillID=' + isBillID + "&txtname=" + txtname + "&tuanDuiID=" + tuanDuiID + "&teamNameId=" + teamNameId
             + "&teamCodeId=" + teamCodeId + "&principalId=" + principalId +
             "&contactPhoneNUmberId=" + contactPhoneNUmberId + "&registerTimeId=" + registerTimeId;
@@ -903,7 +903,7 @@
 
         var isBillID = document.getElementById("teamIsBillId").value;
         var tuanDuiID = document.getElementById("tuanDuiId").value;
-    /*    teamSelect();*/
+        teamSelect();
     }
 
 

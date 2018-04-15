@@ -2,7 +2,10 @@ package com.hotelms.controller;
 
 
 import com.hotelms.bean.ListBean;
+import com.hotelms.bean.StayRegister;
 import com.hotelms.bean.StayRegisterBean;
+import com.hotelms.bean.Team;
+import com.hotelms.dao.TeamMapper;
 import com.hotelms.service.SatyregisterService;
 import com.hotelms.utils.ItemUtils;
 import com.hotelms.vo.PassengerStayRegisterVO;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,8 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -205,5 +211,143 @@ public class StayregisterController {
         model.addAttribute("item",stayRegisterBean);
         model.addAttribute("listTwo",ItemUtils.getListOfItem(9));
         return "/WEB-INF/jsp/stayregister/deposit.jsp";
+    }
+
+
+    @Autowired
+    TeamMapper teamMapper;
+
+    /**
+     * 旅客 结账按钮 跳转结账页面
+     * @param id 订单id
+     * @param lvKeName 旅客名字
+     * @return
+     */
+    @RequestMapping("topay")
+    public String toPay(int id,String lvKeName,Model model) {
+
+        StayRegisterBean stayRegisterBean = satyregisterService.getStayRegisyerObjectById(id);
+        model.addAttribute("stayRegisterBean",stayRegisterBean);
+        model.addAttribute("listOne",ItemUtils.getListOfItem(9));
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        model.addAttribute("timestamp",timestamp);
+        HashMap<String, Object> detailMoney = satyregisterService.getDetailMoney(stayRegisterBean);
+        model.addAttribute("yingBuJinE",detailMoney.get("yingBuJinE"));
+        model.addAttribute("shangPinXiaoFei",detailMoney.get("shangPinXiaoFei"));
+        model.addAttribute("zhuSuFei",detailMoney.get("zhuSuFei"));
+        return "/WEB-INF/jsp/stayregister/pay.jsp";
+    }
+
+    /**
+     * pay.jsp 页面 结账按钮
+     * @param id 订单id
+     * @param remarks 应补缴费用
+     * @param payTime 结账时间
+     * @param payWay 结账方式id
+     * @param roomId 房间id
+     * @return
+     */
+    @RequestMapping("pay")
+    public String pay(int id, int remarks,String payTime,int payWay,int roomId) {
+
+        satyregisterService.updateStayRegisterAndRoomWhenPay(id,payTime,payWay,roomId);
+        return "tolist.do";
+    }
+
+    /**
+     * 团队页面下，搜索，变更是否结账下拉框，选择对象确定后
+     * 根据条件搜索部分订单项
+     * @param LvKeLeiXingId 团队还是旅客
+     * @param isBillID 是否结账 0未结账 1已结账
+     * @param txtname  房间号关键字
+     * @param tuanDuiID 团队id
+     * @param teamNameId 团队名称
+     * @param teamCodeId 团队编号
+     * @param principalId 负责人姓名
+     * @param contactPhoneNUmberId 负责人手机号
+     * @param registerTimeId 团队登记时间
+     * @return
+     */
+    @RequestMapping("toteamlist")
+    public String toTeamList(String LvKeLeiXingId,String isBillID,String txtname,String tuanDuiID,String teamNameId
+            ,String teamCodeId,String principalId,String contactPhoneNUmberId,String registerTimeId,Model model) {
+        ListBean listBean = satyregisterService
+                .findStayRegistersByTeamIdAndBillIdAndRoomId(isBillID, tuanDuiID, txtname);
+        model.addAttribute("list",listBean);
+        model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
+        model.addAttribute("tuanDui",tuanDuiID);
+        model.addAttribute("teamNameId",teamNameId);
+        model.addAttribute("teamCodeId",teamCodeId);
+        model.addAttribute("principalId",principalId);
+        model.addAttribute("contactPhoneNUmberId",contactPhoneNUmberId);
+        model.addAttribute("registerTimeId",registerTimeId);
+        int sumMoney = satyregisterService.getTotalMoney(listBean.getResult());
+        model.addAttribute("teamSumConst",sumMoney);
+        return "/WEB-INF/jsp/stayregister/list.jsp";
+    }
+
+    /**
+     * 团队 结账按钮 跳转结账页面
+     * @param tuanDuiID 团队id
+     * @return
+     */
+    @RequestMapping("toteampay")
+    public String toTeamPay(int tuanDuiID,Model model) {
+
+        model.addAttribute("tuanDuiID",tuanDuiID);
+        List<StayRegisterBean> registerBeans = satyregisterService.getStayRegistersByTeamAndNotBilled(tuanDuiID);
+        model.addAttribute("list",registerBeans);
+        HashMap<String, Integer> map = satyregisterService.getTotalDetailMoney(registerBeans);
+        model.addAttribute("teamPayVo",map);
+        model.addAttribute("fangJianShu",registerBeans.size());
+        model.addAttribute("timestamp",new Timestamp(System.currentTimeMillis()));
+        model.addAttribute("listPayWay",ItemUtils.getListOfItem(9));
+        Team team = teamMapper.selectTeamByID(tuanDuiID);
+        model.addAttribute("team",team);
+        return "/WEB-INF/jsp/stayregister/teampay.jsp";
+    }
+
+    /**
+     * 团队结账
+     * @param id 订单数组
+     * @param remarks 空
+     * @param payWay 支付方式id
+     * @param payTime 支付时间
+     * @return
+     */
+    @RequestMapping("teamPay")
+    public String teamPay(String[] id,String remarks,String payWay,String payTime) {
+
+        satyregisterService.updateStayRegisterAndRoomWhenTeamPay(id,payWay,payTime);
+        return "tolist.do";
+    }
+
+    /**
+     * 团队结账 移除按钮 重新计算各种金额详情
+     * @return 带有详情金额的map集合
+     */
+    @ResponseBody
+    @RequestMapping("timeAjaxSelectRoomThree")
+    public HashMap<String,Integer> deleteSomeRegistersWhenPay(@RequestParam String[] id
+            , @RequestParam String zhuSuFei, @RequestParam String huanFangFei, @RequestParam String qiTaXiaoFei
+            , @RequestParam String jieZhangJinE,@RequestParam String yaJin,@RequestParam String yingBuJinE) {
+
+        System.out.println("aaaa");
+        HashMap<String, Integer> map = satyregisterService.changeTotalDetailMoney(id, zhuSuFei
+                , huanFangFei, qiTaXiaoFei, jieZhangJinE, yaJin, yingBuJinE);
+        return map;
+    }
+
+    /**
+     * 团队结账 查询按钮 查询登陆时间区间的订单
+     */
+    @ResponseBody
+    @RequestMapping("timeAjaxSelectRoomOne")
+    public List<StayRegisterBean> findSomeRegistersByDate(@RequestParam String receiveTargetID
+            ,@RequestParam String datemin,@RequestParam String datemax) {
+
+        List<StayRegisterBean> registers = satyregisterService
+                .findSomeUnBilledRegistersByDateAndId(receiveTargetID, datemin, datemax);
+        return registers;
     }
 }
